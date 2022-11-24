@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/card_consulta">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="100dp"
+        android:orientation="horizontal"
+        android:background="@drawable/borda_black_fill_blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingTop="2dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="55"
+            android:layout_margin="2dp"
+            android:paddingStart="10dp">
+
+            <TextView
+                android:id="@+id/titulo_consulta"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="33"
+                android:text="Clareamento dental"
+                android:textColor="@color/white"
+                android:autoSizeTextType="uniform"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/endereco_consulta"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="33"
+                android:textColor="@color/white"
+                android:text="Av. Avenida 123, sala 42"
+                android:autoSizeTextType="uniform"
+                android:paddingVertical="5dp"/>
+
+            <TextView
+                android:id="@+id/data_consulta"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="33"
+                android:textColor="@color/white"
+                android:text="Terça, 15 dez 2022"
+                android:autoSizeTextType="uniform"
+                android:paddingVertical="5.5dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="38">
+
+            <TextView
+                android:id="@+id/hora_consulta"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="33"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:text="15:00 H"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
+                android:paddingTop="2dp"/>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="33"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="33"
+                android:textColor="@color/black"
+                android:text="ver mais"
+                android:gravity="center"
+                android:background="@drawable/vermais"
+                android:backgroundTint="@color/white"
+                android:autoSizeTextType="uniform"
+                android:paddingVertical="3dp"
+                android:paddingHorizontal="3dp"
+                android:layout_marginBottom="1.5dp"
+                android:layout_marginEnd="1.5dp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
