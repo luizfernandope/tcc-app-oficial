@@ -8,11 +8,13 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tcc.R;
+import com.example.tcc.databinding.FragmentServicosBinding;
 
 public class TratamentoViewHolder extends RecyclerView.ViewHolder {
 
     public CardView card1, card2;
     public TextView titulo1, titulo2, descricao1, descricao2, tipo1, tipo2; //public para que o adapter tenha acesso e possa manipular
+
 
     public TratamentoViewHolder(@NonNull View itemView) {
         super(itemView);

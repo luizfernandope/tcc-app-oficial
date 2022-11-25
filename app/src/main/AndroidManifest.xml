@@ -20,10 +20,10 @@
             android:exported="false">
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".Activitys.Agenda"
             android:exported="false" />
         <activity
-            android:name=".Activitys.Agenda"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
