@@ -12,11 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.tcc.Activitys.Servicos;
 import com.example.tcc.Adapters.TratamentoAdapter;
 import com.example.tcc.Interfaces.APICall;
 import com.example.tcc.Models.Tratamento;
-import com.example.tcc.R;
 import com.example.tcc.databinding.FragmentServicosBinding;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

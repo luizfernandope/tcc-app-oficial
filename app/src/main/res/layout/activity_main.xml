@@ -12,7 +12,7 @@
         android:id="@+id/frameLayout_telas"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/teal_200"
+        android:background="@color/bg_main_pages"
         android:layout_weight="90"/>
 
     <LinearLayout
