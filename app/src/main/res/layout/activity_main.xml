@@ -26,13 +26,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="agenda"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="10dp"
             android:onClick="trocaFragment"/>
         <Button
             android:id="@+id/btn_servicos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="servicos"
+            android:onClick="trocaFragment"
+            android:layout_marginEnd="10dp"/>
+
+        <Button
+            android:id="@+id/btn_marcar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="marcar consulta"
             android:onClick="trocaFragment"/>
     </LinearLayout>
 

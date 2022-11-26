@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.example.tcc.Fragments.AgendaFragment;
+import com.example.tcc.Fragments.MarcarConsultaFragment;
 import com.example.tcc.Fragments.ServicosFragment;
 import com.example.tcc.databinding.ActivityMainBinding;
 
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        trocaFragment(binding.btnServicos);
+        trocaFragment(binding.btnMarcar);
     }
 
     public void trocaFragment(View btnClicado){
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.replace(binding.frameLayoutTelas.getId(), new AgendaFragment());
         else if(binding.btnServicos == btnClicado)
             fragmentTransaction.replace(binding.frameLayoutTelas.getId(), new ServicosFragment());
+        else if(binding.btnMarcar == btnClicado)
+            fragmentTransaction.replace(binding.frameLayoutTelas.getId(), new MarcarConsultaFragment());
         fragmentTransaction.commit();
     }
 }
