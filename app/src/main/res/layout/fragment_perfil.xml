@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragments.PerfilFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_header"
+            android:orientation="vertical"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="20dp"
+            android:layout_marginBottom="30dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="meu perfil"
+                    android:textColor="@color/white"
+                    android:textSize="32dp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ola"
+                    android:textColor="@color/white"
+                    android:textSize="22dp"
+                    android:gravity="end"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Meus dados"
+            android:textColor="@color/black"
+            android:textSize="22dp"
+            android:textStyle="bold"
+            android:layout_marginHorizontal="20dp"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginHorizontal="20dp"
+            app:cardCornerRadius="16dp"
+            android:backgroundTint="@color/azul">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="25dp"
+                android:paddingVertical="15dp"
+                android:orientation="vertical">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/nomeContainer_perfil"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/white"
+                    app:hintTextColor="@color/white"
+                    app:boxStrokeColor="@color/black"
+                    app:boxStrokeWidth="1.5dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    app:startIconDrawable="@drawable/ic_person">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etNome"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="nome"
+                        android:textColor="@color/white"
+                        android:enabled="false" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/cpfContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    app:helperTextTextColor="#ff0000"
+                    android:textColorHint="@color/white"
+                    app:hintTextColor="@color/white"
+                    app:boxStrokeColor="@color/black"
+                    app:boxStrokeWidth="1.5dp"
+                    app:startIconDrawable="@drawable/ic_person">
+                    <com.santalu.maskara.widget.MaskEditText
+                        android:id="@+id/etMaskCPF"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="CPF"
+                        android:inputType="number"
+                        android:textColor="@color/white"
+                        app:mask="___.___.___-__"
+                        app:maskCharacter="_"
+                        app:maskStyle="completable" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/dataNasciContainer_perfil"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_marginTop="10dp"
+                    android:textColorHint="@color/white"
+                    app:hintTextColor="@color/white"
+                    app:boxStrokeColor="@color/black"
+                    app:boxStrokeWidth="1.5dp"
+                    app:startIconDrawable="@drawable/ic_aniversario">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/dataNasciEditText_perfil"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="data de nascimento"
+                        android:textColor="@color/white"
+                        android:enabled="false"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/sexoContainer_perfil"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_marginTop="10dp"
+                    android:textColorHint="@color/white"
+                    app:hintTextColor="@color/white"
+                    app:startIconDrawable="@drawable/ic_masculino"
+                    app:boxStrokeColor="@color/black"
+                    app:boxStrokeWidth="1.5dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/sexoEditText_perfil"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="sexo"
+                        android:text="Masculino"
+                        android:textColor="@color/white"
+                        android:enabled="false"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/emailContainer_perfil"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_marginTop="10dp"
+                    android:textColorHint="@color/white"
+                    app:hintTextColor="@color/white"
+                    app:boxStrokeColor="@color/black"
+                    app:boxStrokeWidth="1.5dp"
+                    app:startIconDrawable="@drawable/ic_mail">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/emailEditText_perfil"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="email"
+                        android:enabled="false"
+                        android:textColor="@color/white"
+                        android:text="email@gmail.com" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/borda_black"
+                    android:text="editar perfil"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:textColor="@color/black"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Segurança"
+            android:textColor="@color/black"
+            android:textSize="22dp"
+            android:textStyle="bold"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="15dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:text="mudar senha"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:background="@drawable/borda_black"
+            android:drawableStart="@drawable/ic_cadeado"
+            android:drawableTint="@color/black"
+            android:drawablePadding="10dp"
+            android:paddingHorizontal="15dp"
+            android:drawableEnd="@drawable/ic_person"
+            android:layout_marginBottom="10dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:text="entrar com biometria"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:background="@drawable/borda_black"
+            android:drawableStart="@drawable/ic_cadeado"
+            android:drawableTint="@color/black"
+            android:drawablePadding="10dp"
+            android:paddingHorizontal="15dp"
+            android:drawableEnd="@drawable/ic_person"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Geral"
+            android:textColor="@color/black"
+            android:textSize="22dp"
+            android:textStyle="bold"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="15dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:text="termos de uso"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:background="@drawable/borda_black"
+            android:drawableStart="@drawable/ic_cadeado"
+            android:drawableTint="@color/black"
+            android:drawablePadding="10dp"
+            android:paddingHorizontal="15dp"
+            android:drawableEnd="@drawable/ic_person"
+            android:layout_marginBottom="10dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:text="ajuda"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:background="@drawable/borda_black"
+            android:drawableStart="@drawable/ic_cadeado"
+            android:drawableTint="@color/black"
+            android:drawablePadding="10dp"
+            android:paddingHorizontal="15dp"
+            android:drawableEnd="@drawable/ic_person"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sair"
+            android:textColor="@color/black"
+            android:drawableStart="@drawable/ic_logout"
+            android:background="@drawable/borda_black"
+            android:padding="10dp"
+            android:backgroundTint="@color/azul_fraco"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Versão 1.0.2"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:paddingBottom="40dp"/>
+    </LinearLayout>
+</ScrollView>

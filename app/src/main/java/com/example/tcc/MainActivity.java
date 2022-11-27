@@ -4,12 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 
+import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
+import com.example.tcc.Activitys.SobreTratamentoActivity;
 import com.example.tcc.Fragments.AgendaFragment;
-import com.example.tcc.Fragments.MarcarConsultaFragment;
+import com.example.tcc.Fragments.InicioFragment;
+import com.example.tcc.Fragments.PerfilFragment;
 import com.example.tcc.Fragments.ServicosFragment;
 import com.example.tcc.databinding.ActivityMainBinding;
 
@@ -23,19 +26,46 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        trocaFragment(binding.btnMarcar);
+        binding.bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.ic_home));
+        binding.bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.ic_lupa));
+        binding.bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.ic_calendario));
+        binding.bottomNavigation.add(new MeowBottomNavigation.Model(4, R.drawable.ic_person));
+
+        binding.bottomNavigation.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
+            @Override
+            public void onClickItem(MeowBottomNavigation.Model item) {
+
+            }
+        });
+        binding.bottomNavigation.setOnReselectListener(new MeowBottomNavigation.ReselectListener() {
+            @Override
+            public void onReselectItem(MeowBottomNavigation.Model item) {
+
+            }
+        });
+        binding.bottomNavigation.setOnShowListener(new MeowBottomNavigation.ShowListener() {
+            @Override
+            public void onShowItem(MeowBottomNavigation.Model item) {
+                trocaFragment(item.getId());
+            }
+        });
+
     }
 
-    public void trocaFragment(View btnClicado){
+    public void trocaFragment(int idTela){
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        if(binding.btnAgenda == btnClicado)
-            fragmentTransaction.replace(binding.frameLayoutTelas.getId(), new AgendaFragment());
-        else if(binding.btnServicos == btnClicado)
+        if(idTela == 1)
+            fragmentTransaction.replace(binding.frameLayoutTelas.getId(), new InicioFragment());
+        else if(idTela == 2)
             fragmentTransaction.replace(binding.frameLayoutTelas.getId(), new ServicosFragment());
-        else if(binding.btnMarcar == btnClicado)
-            fragmentTransaction.replace(binding.frameLayoutTelas.getId(), new MarcarConsultaFragment());
+        else if(idTela == 3)
+            fragmentTransaction.replace(binding.frameLayoutTelas.getId(), new AgendaFragment());
+        else if(idTela == 4)
+            fragmentTransaction.replace(binding.frameLayoutTelas.getId(), new PerfilFragment());
+
+
         fragmentTransaction.commit();
     }
 }

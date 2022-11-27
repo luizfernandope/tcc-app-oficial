@@ -1,19 +1,25 @@
 package com.example.tcc.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tcc.Activitys.MarcarConsultaActivity;
+import com.example.tcc.Activitys.SobreTratamentoActivity;
 import com.example.tcc.Models.Tratamento;
 import com.example.tcc.R;
 import com.example.tcc.ViewHolders.TratamentoViewHolder;
 
 import java.util.ArrayList;
-
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class TratamentoAdapter extends RecyclerView.Adapter<TratamentoViewHolder> {
     //clase que configura o adapter, para permitir que a listagem no RecyclerView seja feita
 
@@ -48,6 +54,24 @@ public class TratamentoAdapter extends RecyclerView.Adapter<TratamentoViewHolder
             if(proximo==qtd-1){
                 proximo = proximo+100;
             }
+            //quando clicar no card
+            holder.card1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, SobreTratamentoActivity.class);
+                    intent.putExtra("idTratamento", card1.getId());
+                    context.startActivity(intent);
+                }
+            });
+            //quando clicar em marcar consulta
+            holder.marcar1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, MarcarConsultaActivity.class);
+                    intent.putExtra("idTratamento", card1.getId());
+                    context.startActivity(intent);
+                }
+            });
         }
         else{
             holder.card1.removeAllViews();
@@ -60,9 +84,29 @@ public class TratamentoAdapter extends RecyclerView.Adapter<TratamentoViewHolder
             holder.titulo2.setText(card2.getNome());
             holder.descricao2.setText(card2.getDescricao());
             holder.tipo2.setText(card2.getTipo());
+            //quando clicar no card
+            holder.card1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, SobreTratamentoActivity.class);
+                    intent.putExtra("idTratamento", card2.getId());
+                    context.startActivity(intent);
+                }
+            });
+            //quando clicar em marcar consulta
+            holder.marcar1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, MarcarConsultaActivity.class);
+                    intent.putExtra("idTratamento", card2.getId());
+                    context.startActivity(intent);
+                }
+            });
         }
 
+
     }
+
 
     @Override
     public int getItemCount() {

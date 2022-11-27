@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.tcc">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -15,6 +15,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Tcc"
         tools:targetApi="31">
+        <activity
+            android:name=".Activitys.SobreConsultaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.SobreTratamentoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activitys.MarcarConsultaActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

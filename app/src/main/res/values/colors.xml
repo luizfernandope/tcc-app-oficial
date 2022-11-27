@@ -14,4 +14,9 @@
     <color name="bg_main_pages">#e2e2e2</color>
     <color name="bg_header">#1C1C1C</color>
 
+    <color name="icon_menu_unselect">#B7B7B7</color>
+    <color name="sobra_menu">#8C1574F6</color>
+
+    <color name="verde">#8C40CD24</color>
+
 </resources>

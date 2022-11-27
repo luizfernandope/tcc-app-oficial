@@ -13,7 +13,7 @@ import com.example.tcc.databinding.FragmentServicosBinding;
 public class TratamentoViewHolder extends RecyclerView.ViewHolder {
 
     public CardView card1, card2;
-    public TextView titulo1, titulo2, descricao1, descricao2, tipo1, tipo2; //public para que o adapter tenha acesso e possa manipular
+    public TextView titulo1, titulo2, descricao1, descricao2, tipo1, tipo2, marcar1, marcar2; //public para que o adapter tenha acesso e possa manipular
 
 
     public TratamentoViewHolder(@NonNull View itemView) {
@@ -27,5 +27,7 @@ public class TratamentoViewHolder extends RecyclerView.ViewHolder {
         descricao2 = itemView.findViewById(R.id.descricao2_tratamento);
         tipo1 = itemView.findViewById(R.id.tipo1_tratamento);
         tipo2 = itemView.findViewById(R.id.tipo2_tratamento);
+        marcar1 = itemView.findViewById(R.id.marcarConsulta1);
+        marcar2 = itemView.findViewById(R.id.marcarConsulta2);
     }
 }

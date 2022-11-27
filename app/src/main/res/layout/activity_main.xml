@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@color/azul"
+    android:background="@color/bg_main_pages"
     android:orientation="vertical">
 
     <FrameLayout
@@ -13,36 +13,21 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/bg_main_pages"
-        android:layout_weight="90"/>
+        android:layout_weight="90"
+        />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        android:layout_weight="10"
-        android:gravity="center">
-        <Button
-            android:id="@+id/btn_agenda"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="agenda"
-            android:layout_marginEnd="10dp"
-            android:onClick="trocaFragment"/>
-        <Button
-            android:id="@+id/btn_servicos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="servicos"
-            android:onClick="trocaFragment"
-            android:layout_marginEnd="10dp"/>
 
-        <Button
-            android:id="@+id/btn_marcar"
-            android:layout_width="wrap_content"
+        <com.etebarian.meowbottomnavigation.MeowBottomNavigation
+            android:id="@+id/bottomNavigation"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="marcar consulta"
-            android:onClick="trocaFragment"/>
-    </LinearLayout>
+            app:mbn_circleColor="#ffffff"
+            app:mbn_backgroundBottomColor="#FFFFFF"
+            app:mbn_countBackgroundColor="#ff6f00"
+            app:mbn_countTextColor="#ffffff"
+            app:mbn_defaultIconColor="@color/icon_menu_unselect"
+            app:mbn_selectedIconColor="@color/azul"
+            app:mbn_shadowColor="@color/sobra_menu"/>
 
 
 

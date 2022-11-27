@@ -1,6 +1,7 @@
 package com.example.tcc.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tcc.Activitys.SobreConsultaActivity;
 import com.example.tcc.Models.Clinica;
 import com.example.tcc.Models.Consulta;
 import com.example.tcc.R;
@@ -48,6 +50,15 @@ public class ConsultaAdapter extends RecyclerView.Adapter<ConsultaViewHolder> {
         holder.hora.setText(consulta.getDatahora().substring(12,16) + " H");
         if(position<listConsultas.size()-1)
             holder.card.setPadding(0,0,0,20);
+
+        holder.card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, SobreConsultaActivity.class);
+                intent.putExtra("idConsulta", consulta.getId());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

@@ -44,8 +44,12 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     // Conversor para o retrofit: Gson
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-
-    //date's picker's personalizados
-    implementation 'com.google.android.material:material:1.1.0' //为了防止不必要的依赖冲突，0.0.3开始需要自行依赖google material库
-    implementation 'com.github.loperSeven:DateTimePicker:0.6.0'
+    //bottom navigation
+    implementation 'com.etebarian:meow-bottom-navigation-java:1.2.0'
+    /*image slider, carrosel de fotos*/
+    implementation 'com.romandanylyk:pageindicatorview:1.0.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.14.1'
+    implementation 'com.github.bumptech.glide:glide:4.14.1'
+    //mascara para editText - https://github.com/santalu/maskara
+    implementation 'com.github.santalu:maskara:1.0.0'
 }

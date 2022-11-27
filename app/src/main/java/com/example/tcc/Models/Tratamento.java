@@ -9,6 +9,7 @@ public class Tratamento {
     private String tipo;
     private String tempo;
     private Double valor;
+    
 
     public Integer getId() {
         return id;
