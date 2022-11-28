@@ -1,10 +1,12 @@
 package com.example.tcc;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
@@ -15,7 +17,7 @@ import com.example.tcc.Fragments.InicioFragment;
 import com.example.tcc.Fragments.PerfilFragment;
 import com.example.tcc.Fragments.ServicosFragment;
 import com.example.tcc.databinding.ActivityMainBinding;
-
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     public void trocaFragment(int idTela){
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -64,8 +67,6 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.replace(binding.frameLayoutTelas.getId(), new AgendaFragment());
         else if(idTela == 4)
             fragmentTransaction.replace(binding.frameLayoutTelas.getId(), new PerfilFragment());
-
-
         fragmentTransaction.commit();
     }
 }
