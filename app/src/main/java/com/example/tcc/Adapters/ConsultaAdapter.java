@@ -3,12 +3,14 @@ package com.example.tcc.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tcc.Activitys.SobreConsultaActivity;
@@ -34,6 +36,7 @@ public class ConsultaAdapter extends RecyclerView.Adapter<ConsultaViewHolder> {
     public ConsultaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.component_consulta, parent, false); // view que sera replicada
         ConsultaViewHolder viewHolder = new ConsultaViewHolder(view); //declarando e configurando viewHolder
+
         return viewHolder;
     }
 

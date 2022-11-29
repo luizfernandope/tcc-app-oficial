@@ -3,6 +3,7 @@ package com.example.tcc.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tcc.Activitys.MarcarConsultaActivity;
 import com.example.tcc.Activitys.SobreTratamentoActivity;
+import com.example.tcc.Fragments.ServicosFragment;
 import com.example.tcc.Models.Tratamento;
 import com.example.tcc.R;
 import com.example.tcc.ViewHolders.TratamentoViewHolder;
@@ -25,11 +28,15 @@ public class TratamentoAdapter extends RecyclerView.Adapter<TratamentoViewHolder
 
     private Context context;
     private ArrayList<Tratamento> listTratamentos;
+    private String cpf, senha;
 
-    public TratamentoAdapter(Context ctx,ArrayList<Tratamento> listTratamentos) {
+    public TratamentoAdapter(Context ctx,ArrayList<Tratamento> listTratamentos, String cpf, String senha) {
         this.context = ctx;
         this.listTratamentos = listTratamentos;
+        this.cpf = cpf;
+        this. senha = senha;
     }
+
 
     @NonNull
     @Override
@@ -60,6 +67,8 @@ public class TratamentoAdapter extends RecyclerView.Adapter<TratamentoViewHolder
                 public void onClick(View view) {
                     Intent intent = new Intent(context, SobreTratamentoActivity.class);
                     intent.putExtra("idTratamento", card1.getId());
+                    intent.putExtra("cpf", cpf);
+                    intent.putExtra("senha", senha);
                     context.startActivity(intent);
                 }
             });
@@ -69,6 +78,8 @@ public class TratamentoAdapter extends RecyclerView.Adapter<TratamentoViewHolder
                 public void onClick(View view) {
                     Intent intent = new Intent(context, MarcarConsultaActivity.class);
                     intent.putExtra("idTratamento", card1.getId());
+                    intent.putExtra("cpf", cpf);
+                    intent.putExtra("senha", senha);
                     context.startActivity(intent);
                 }
             });
@@ -85,20 +96,24 @@ public class TratamentoAdapter extends RecyclerView.Adapter<TratamentoViewHolder
             holder.descricao2.setText(card2.getDescricao());
             holder.tipo2.setText(card2.getTipo());
             //quando clicar no card
-            holder.card1.setOnClickListener(new View.OnClickListener() {
+            holder.card2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, SobreTratamentoActivity.class);
                     intent.putExtra("idTratamento", card2.getId());
+                    intent.putExtra("cpf", cpf);
+                    intent.putExtra("senha", senha);
                     context.startActivity(intent);
                 }
             });
             //quando clicar em marcar consulta
-            holder.marcar1.setOnClickListener(new View.OnClickListener() {
+            holder.marcar2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, MarcarConsultaActivity.class);
                     intent.putExtra("idTratamento", card2.getId());
+                    intent.putExtra("cpf", cpf);
+                    intent.putExtra("senha", senha);
                     context.startActivity(intent);
                 }
             });

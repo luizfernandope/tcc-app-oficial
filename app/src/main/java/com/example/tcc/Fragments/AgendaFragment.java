@@ -1,5 +1,6 @@
 package com.example.tcc.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -37,12 +38,17 @@ public class AgendaFragment extends Fragment {
     private ConsultaAdapter adapter;
     ArrayList<Consulta> consultas;
     RecyclerView recyclerView;
+    private String cpf, senha;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentAgendaBinding.inflate(inflater, container, false);
-        // Inflate the layout for this fragment
+        //pegando o usuario e senha da activity main
+        Bundle bundle = getArguments();
+        cpf = bundle.getString("cpf");
+        senha = bundle.getString("senha");
+
         return binding.getRoot();
     }
 
@@ -50,10 +56,12 @@ public class AgendaFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Toast.makeText(binding.getRoot().getContext(), cpf+"\n"+senha, Toast.LENGTH_SHORT).show();
+
         consultas = new ArrayList<Consulta>();
         configurarRetrofit();
 
-        Call<List<Consulta>> chamadaApi = apiCall.listarConsultas();
+        Call<List<Consulta>> chamadaApi = apiCall.consultasCliente(cpf, senha);
 
         chamadaApi.enqueue(new Callback<List<Consulta>>() {
             @Override

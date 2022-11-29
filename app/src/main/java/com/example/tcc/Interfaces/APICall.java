@@ -20,16 +20,16 @@ public interface APICall {
 
 // https://clinica-tcc-api.herokuapp.com/            link api
 
-    // Usuario.
+
     @GET("servico/listar")
-    Call<List<Tratamento>> listarTratamentos();
+    Call<List<Tratamento>> listarTratamentos(); // funcional
 
+    @GET("consultas/listar/{cpf}/{senha}")
+    Call<List<Consulta>> consultasCliente(@Path("cpf") String cpf, @Path("senha") String senha);// funcional
 
-    //Consulta
-    @GET("consultas/listar")
-    Call<List<Consulta>> listarConsultas();
+    @GET("usuario/login/{cpf}/{senha}")
+    Call<Usuario> login(@Path("cpf") String cpf, @Path("senha") String senha); // funcional
 
-    @HTTP(method = "GET", path = "usuario/login", hasBody = true)
-    Call<Usuario> login(@Body Usuario login);
-
+    @GET("clientes/findCliente/{cpf}/{senha}")
+    Call<Cliente> findCliente(@Path("cpf") String cpf, @Path("senha") String senha); // funcional
 }

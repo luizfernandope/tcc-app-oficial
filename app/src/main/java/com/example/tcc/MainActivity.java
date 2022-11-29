@@ -2,6 +2,7 @@ package com.example.tcc;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -21,12 +22,17 @@ import com.example.tcc.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    public String cpf, senha;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        cpf = getIntent().getStringExtra("cpf");
+        senha = getIntent().getStringExtra("senha");
 
         binding.bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.ic_home));
         binding.bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.ic_lupa));
@@ -59,14 +65,22 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment fragment = new InicioFragment();
         if(idTela == 1)
-            fragmentTransaction.replace(binding.frameLayoutTelas.getId(), new InicioFragment());
+            fragment = new InicioFragment();
         else if(idTela == 2)
-            fragmentTransaction.replace(binding.frameLayoutTelas.getId(), new ServicosFragment());
+            fragment = new ServicosFragment();
         else if(idTela == 3)
-            fragmentTransaction.replace(binding.frameLayoutTelas.getId(), new AgendaFragment());
+            fragment = new AgendaFragment();
         else if(idTela == 4)
-            fragmentTransaction.replace(binding.frameLayoutTelas.getId(), new PerfilFragment());
+            fragment = new PerfilFragment();
+        //passando os dados para os fragments
+        Bundle bundle = new Bundle();
+        bundle.putString("cpf", cpf);
+        bundle.putString("senha", senha);
+        fragment.setArguments(bundle);
+        //iniciando os fragments no frame layout
+        fragmentTransaction.replace(binding.frameLayoutTelas.getId(), fragment);
         fragmentTransaction.commit();
     }
 }

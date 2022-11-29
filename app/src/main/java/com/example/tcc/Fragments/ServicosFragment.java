@@ -41,18 +41,25 @@ public class ServicosFragment extends Fragment {
     APICall apiCall;
     TratamentoAdapter adapter;
     ArrayList<Tratamento> tratamentos = new ArrayList<Tratamento>();
+    private String cpf, senha;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentServicosBinding.inflate(inflater, container, false);
-        // Inflate the layout for this fragment
+
+        Bundle bundle = getArguments();
+        cpf = bundle.getString("cpf");
+        senha = bundle.getString("senha");
+
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        Toast.makeText(binding.getRoot().getContext(), cpf+"\n"+senha, Toast.LENGTH_SHORT).show();
 
         configurarRetrofit();
 
@@ -99,12 +106,12 @@ public class ServicosFragment extends Fragment {
         if (tratamentosFiltrados.isEmpty()) {
             Toast.makeText(binding.getRoot().getContext(), "Sem resultados", Toast.LENGTH_SHORT).show();
             //exibe nenhum item
-            adapter = new TratamentoAdapter(binding.getRoot().getContext(), tratamentosFiltrados);
+            adapter = new TratamentoAdapter(binding.getRoot().getContext(), tratamentosFiltrados, cpf, senha);
             binding.recyclerViewTratamento.setAdapter(adapter);
         }
         else{
             //exibe os itens
-            adapter = new TratamentoAdapter(binding.getRoot().getContext(), tratamentosFiltrados);
+            adapter = new TratamentoAdapter(binding.getRoot().getContext(), tratamentosFiltrados, cpf, senha);
             binding.recyclerViewTratamento.setAdapter(adapter);
         }
     }
@@ -133,7 +140,7 @@ public class ServicosFragment extends Fragment {
 
     void inicializarListagem(){
         binding.recyclerViewTratamento.setHasFixedSize(true);//da mais desempenho na listagem
-        adapter = new TratamentoAdapter(binding.getRoot().getContext(), tratamentos);
+        adapter = new TratamentoAdapter(binding.getRoot().getContext(), tratamentos, cpf, senha);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(binding.getRoot().getContext(), LinearLayoutManager.VERTICAL, false);
         binding.recyclerViewTratamento.setLayoutManager(layoutManager);
         binding.recyclerViewTratamento.setAdapter(adapter);

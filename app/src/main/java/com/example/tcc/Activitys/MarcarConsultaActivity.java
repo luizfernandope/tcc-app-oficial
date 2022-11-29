@@ -34,12 +34,19 @@ public class MarcarConsultaActivity extends AppCompatActivity {
     private String data;
     private LocalDate horarioEscolhido = LocalDate.now();
     private Integer idTratamento = 0; //pegar o id do tratamento
+    private String cpf, senha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMarcarConsultaBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        cpf = getIntent().getStringExtra("cpf");
+        senha = getIntent().getStringExtra("senha");
+
+        Toast.makeText(MarcarConsultaActivity.this, "cliclou\n"+cpf+"\n"+senha, Toast.LENGTH_SHORT).show();//teste recebimento dos valores
+
         //variaveis para configurar o calendario
         Date dataMaxFormatada = new Date();
         LocalDate dataMax = LocalDate.now().plusMonths(2);
