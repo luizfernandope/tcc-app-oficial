@@ -12,6 +12,7 @@ public class SobreTratamentoActivity extends AppCompatActivity {
 
     private ActivitySobreTratamentoBinding binding;
     private String cpf, senha;
+    private Integer idTratamento;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +22,9 @@ public class SobreTratamentoActivity extends AppCompatActivity {
 
         cpf = getIntent().getStringExtra("cpf");
         senha = getIntent().getStringExtra("senha");
+        idTratamento = getIntent().getIntExtra("idTratamento", 0);
 
-        Toast.makeText(SobreTratamentoActivity.this, "cliclou\n"+cpf+"\n"+senha, Toast.LENGTH_SHORT).show();//teste recebimento dos valores
+        Toast.makeText(SobreTratamentoActivity.this, "cliclou\n"+cpf+"\n"+senha+"\nidTratamento: "+idTratamento, Toast.LENGTH_SHORT).show();//teste recebimento dos valores
     }
 
     public void voltarSobreTratamento(View view){

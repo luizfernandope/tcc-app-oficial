@@ -58,4 +58,6 @@ public class Tratamento {
     public void setValor(Double valor) {
         this.valor = valor;
     }
+
+
 }

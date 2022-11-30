@@ -13,6 +13,8 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
+import retrofit2.http.Header;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -30,6 +32,10 @@ public interface APICall {
     @GET("usuario/login/{cpf}/{senha}")
     Call<Usuario> login(@Path("cpf") String cpf, @Path("senha") String senha); // funcional
 
+    @GET("usuario/existe/{cpf}")
+    Call<String> existeUsuarioByCPF(@Path("cpf") String cpf); // funcional
+
     @GET("clientes/findCliente/{cpf}/{senha}")
     Call<Cliente> findCliente(@Path("cpf") String cpf, @Path("senha") String senha); // funcional
+
 }

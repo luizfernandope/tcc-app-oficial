@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activitys.Cadastro2Activity"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/titulo_login"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:autoSizeTextType="uniform"
+        android:textAlignment="center"
+        android:text="Cadastre-se"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginTop="60dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingHorizontal="40dp"
+        android:gravity="center">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/cpfContainer_cadastro2"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:startIconDrawable="@drawable/ic_person"
+            android:hint="nome"
+            app:startIconTint="@color/black"
+            app:boxStrokeColor="@color/black"
+            android:textColorHint="@color/black">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etNome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/telefoneContainer_cadastro2"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:helperTextTextColor="#ff0000"
+            app:startIconDrawable="@drawable/ic_telefone"
+            app:startIconTint="@color/black"
+            app:boxStrokeColor="@color/black"
+            android:textColorHint="@color/black">
+
+            <com.santalu.maskara.widget.MaskEditText
+                android:id="@+id/etMaskTelefone_cadastro2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="telefone"
+                android:textColor="@color/black"
+                android:inputType="phone"
+                app:mask="(__)_____-____"
+                app:maskCharacter="_"
+                app:maskStyle="completable" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailContainer_cadastro2"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:helperTextTextColor="#ff0000"
+            app:startIconDrawable="@drawable/ic_mail"
+            app:startIconTint="@color/black"
+            app:boxStrokeColor="@color/black"
+            android:textColorHint="@color/black">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etMaskEmail_cadastro2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="email"
+                android:textColor="@color/black"
+                android:inputType="textEmailAddress" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/dataNasciContainer_cadastro2"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:helperTextTextColor="#ff0000"
+            app:startIconDrawable="@drawable/ic_aniversario"
+            app:startIconTint="@color/black"
+            app:boxStrokeColor="@color/black"
+            android:textColorHint="@color/black">
+
+            <com.santalu.maskara.widget.MaskEditText
+                android:id="@+id/etMaskDataNasci_cadastro2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="data de nascimento"
+                android:inputType="phone"
+                android:textColor="@color/black"
+                app:mask="__/__/____"
+                app:maskCharacter="_"
+                app:maskStyle="completable" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/senhaContainer_cadastro2"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:counterEnabled="true"
+            app:counterMaxLength="16"
+            app:helperTextTextColor="#ff0000"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/black"
+            app:startIconDrawable="@drawable/ic_cadeado"
+            app:startIconTint="@color/black"
+            app:boxStrokeColor="@color/black"
+            android:textColorHint="@color/black">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etSenha_cadastro2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Senha"
+                android:textColor="@color/black"
+                android:inputType="textPassword"
+                android:lines="1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Masculino"
+                android:textColor="@color/black"/>
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Feminino"
+                android:textColor="@color/black"
+                android:layout_marginStart="15dp"
+                android:drawableEnd="@drawable/ic_person"
+                android:paddingEnd="10dp"/>
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/checkBoxTermos_cadastro2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="eu aceito os Termos e Condições do app e Políticas de privacidade"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:layout_marginTop="20dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAvancar_cadastro1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:background="@drawable/borda_black_fill_blue"
+            android:textColor="@color/white"
+            android:text="Avançar"
+            android:textSize="22dp"
+            android:layout_marginTop="20dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>
