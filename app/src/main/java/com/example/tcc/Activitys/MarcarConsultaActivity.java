@@ -83,8 +83,14 @@ public class MarcarConsultaActivity extends AppCompatActivity {
                 String diaString = horarioEscolhido.getDayOfWeek().getDisplayName(TextStyle.FULL, new Locale("pt", "br"));
                 String mesString = horarioEscolhido.getMonth().getDisplayName(TextStyle.FULL, new Locale("pt", "br"));
                 data = diaString + " " + dia + " de " + mesString + " de "+ ano;
-                if(mes>0 && mes<10)
-                    dateParaApi = dia+"/"+"0"+mes+"/"+ano;
+                if(mes>0 && mes<10){
+                    if(dia>0 && dia<10)
+                        dateParaApi = "0"+dia+"/"+"0"+mes+"/"+ano;
+                    else
+                        dateParaApi = dia+"/"+"0"+mes+"/"+ano;
+                }
+                else if(dia>0 && dia<10)
+                    dateParaApi = "0"+dia+"/"+mes+"/"+ano;
                 else
                     dateParaApi  = dia+"/"+mes+"/"+ano;
                 resetarHoras();

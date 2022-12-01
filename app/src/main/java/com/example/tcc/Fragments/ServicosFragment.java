@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,9 +19,7 @@ import android.widget.Toast;
 
 import com.example.tcc.Adapters.TratamentoAdapter;
 import com.example.tcc.Interfaces.APICall;
-import com.example.tcc.Models.Consulta;
 import com.example.tcc.Models.Tratamento;
-import com.example.tcc.R;
 import com.example.tcc.databinding.FragmentServicosBinding;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -42,6 +41,8 @@ public class ServicosFragment extends Fragment {
     TratamentoAdapter adapter;
     ArrayList<Tratamento> tratamentos = new ArrayList<Tratamento>();
     private String cpf, senha;
+    RecyclerView recyclerViewTratamentos;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,6 +53,7 @@ public class ServicosFragment extends Fragment {
         cpf = bundle.getString("cpf");
         senha = bundle.getString("senha");
 
+        recyclerViewTratamentos = binding.recyclerViewTratamento;
         return binding.getRoot();
     }
 
@@ -61,22 +63,27 @@ public class ServicosFragment extends Fragment {
 
         configurarRetrofit();
 
-        Call<List<Tratamento>> chamadaAPI = apiCall.listarTratamentos();
-        chamadaAPI.enqueue(new Callback<List<Tratamento>>() {
-            @Override
-            public void onResponse(Call<List<Tratamento>> call, Response<List<Tratamento>> response) {
-                for(int i=0; i<response.body().size(); i++){
-                    tratamentos.add(response.body().get(i));
+        if(tratamentos.size() <1){
+            System.out.println("\n\nchamada da api para listar\n");
+            Call<List<Tratamento>> chamadaAPI = apiCall.listarTratamentos();
+            chamadaAPI.enqueue(new Callback<List<Tratamento>>() {
+                @Override
+                public void onResponse(Call<List<Tratamento>> call, Response<List<Tratamento>> response) {
+                    for(int i=0; i<response.body().size(); i++){
+                        tratamentos.add(response.body().get(i));
+                    }
+                    //depois de carregar o array de tratamentos
+                    inicializarListagem();
+                    System.out.println("\n\nlistagem da api feita\n");
                 }
-                //depois de carregar o array de tratamentos
-                inicializarListagem();
-            }
 
-            @Override
-            public void onFailure(Call<List<Tratamento>> call, Throwable t) {
+                @Override
+                public void onFailure(Call<List<Tratamento>> call, Throwable t) {
 
-            }
-        });
+                }
+            });
+        }
+
 
         binding.barraPesquisa.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -86,7 +93,7 @@ public class ServicosFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                binding.barraPesquisa.setBackgroundResource(R.drawable.borda_black_fill_blue);
+                adapter.notifyDataSetChanged();
                 verificarPesquisa(newText);
                 return true;
             }
@@ -94,6 +101,8 @@ public class ServicosFragment extends Fragment {
     }
 
     private void verificarPesquisa(String texto) {
+        adapter.notifyDataSetChanged();
+        System.out.println("\n\nmetodo barra de pesquisa\n");
         ArrayList<Tratamento> tratamentosFiltrados = new ArrayList<>();
         for(Tratamento t: tratamentos){
             if(t.getNome().toLowerCase().contains(texto.toLowerCase())){
@@ -104,13 +113,13 @@ public class ServicosFragment extends Fragment {
         if (tratamentosFiltrados.isEmpty()) {
             Toast.makeText(binding.getRoot().getContext(), "Busca sem resultados", Toast.LENGTH_SHORT).show();
             //exibe nenhum item
-            adapter = new TratamentoAdapter(binding.getRoot().getContext(), tratamentosFiltrados, cpf, senha);
-            binding.recyclerViewTratamento.setAdapter(adapter);
+            adapter = new TratamentoAdapter(getContext(), tratamentosFiltrados, cpf, senha);
+            recyclerViewTratamentos.setAdapter(adapter);
         }
         else{
             //exibe os itens
-            adapter = new TratamentoAdapter(binding.getRoot().getContext(), tratamentosFiltrados, cpf, senha);
-            binding.recyclerViewTratamento.setAdapter(adapter);
+            adapter = new TratamentoAdapter(getContext(), tratamentosFiltrados, cpf, senha);
+            recyclerViewTratamentos.setAdapter(adapter);
         }
     }
 
@@ -119,6 +128,8 @@ public class ServicosFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }/*fim dos metodos padrões das classes tipo Fragment; metodos: onCreateView, onViewCreated, onDestroyView*/
+
+
 
     void configurarRetrofit(){
 
@@ -137,10 +148,10 @@ public class ServicosFragment extends Fragment {
     }
 
     void inicializarListagem(){
-        binding.recyclerViewTratamento.setHasFixedSize(true);//da mais desempenho na listagem
-        adapter = new TratamentoAdapter(binding.getRoot().getContext(), tratamentos, cpf, senha);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(binding.getRoot().getContext(), LinearLayoutManager.VERTICAL, false);
-        binding.recyclerViewTratamento.setLayoutManager(layoutManager);
-        binding.recyclerViewTratamento.setAdapter(adapter);
+        recyclerViewTratamentos.setHasFixedSize(true);//da mais desempenho na listagem
+        adapter = new TratamentoAdapter(getContext(), tratamentos, cpf, senha);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerViewTratamentos.setLayoutManager(layoutManager);
+        recyclerViewTratamentos.setAdapter(adapter);
     }
 }

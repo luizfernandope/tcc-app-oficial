@@ -25,10 +25,13 @@ public class ConsultaAdapter extends RecyclerView.Adapter<ConsultaViewHolder> {
 
     private Context context;
     private ArrayList<Consulta> listConsultas;
+    private String cpf, senha;
 
-    public ConsultaAdapter(Context context, ArrayList<Consulta> listConsultas) {
+    public ConsultaAdapter(Context context, ArrayList<Consulta> listConsultas, String cpf, String senha) {
         this.context = context;
         this.listConsultas = listConsultas;
+        this.cpf = cpf;
+        this. senha = senha;
     }
 
     @NonNull
@@ -59,6 +62,8 @@ public class ConsultaAdapter extends RecyclerView.Adapter<ConsultaViewHolder> {
             public void onClick(View view) {
                 Intent intent = new Intent(context, SobreConsultaActivity.class);
                 intent.putExtra("idConsulta", consulta.getId());
+                intent.putExtra("cpf", cpf);
+                intent.putExtra("senha", senha);
                 context.startActivity(intent);
             }
         });

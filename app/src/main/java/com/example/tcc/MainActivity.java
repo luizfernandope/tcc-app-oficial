@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     public String cpf, senha;
+    private int idTelaAtual;
 
 
     @Override
@@ -54,10 +55,18 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNavigation.setOnShowListener(new MeowBottomNavigation.ShowListener() {
             @Override
             public void onShowItem(MeowBottomNavigation.Model item) {
-                trocaFragment(item.getId());
+                if(idTelaAtual == item.getId())
+                {
+
+                }
+                else{
+                    idTelaAtual = item.getId();
+                    trocaFragment(item.getId());
+                }
             }
         });
 
+        binding.bottomNavigation.show(1, false); //iniciar com o fragment de inicio
     }
 
 
