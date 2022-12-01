@@ -56,8 +56,6 @@ public class AgendaFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Toast.makeText(binding.getRoot().getContext(), cpf+"\n"+senha, Toast.LENGTH_SHORT).show();
-
         consultas = new ArrayList<Consulta>();
         configurarRetrofit();
 
@@ -75,7 +73,7 @@ public class AgendaFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Consulta>> call, Throwable t) {
-                Toast.makeText(binding.getRoot().getContext(), "erro: "+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(binding.getRoot().getContext(), "erro ao requisitar suas consultas | "+t.getMessage(), Toast.LENGTH_SHORT).show();
                 System.out.println("\n\n\n"+"mensagem: "+t.getMessage());
                 System.out.println("\n\n\n"+"erro: "+t.getLocalizedMessage());
             }

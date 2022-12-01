@@ -378,7 +378,8 @@
                     android:text="agendar consulta"
                     android:textSize="16dp"
                     android:textColor="@color/white"
-                    android:background="@drawable/borda_black_fill_blue"/>
+                    android:background="@drawable/borda_black_fill_blue"
+                    android:onClick="efetuarAgendamento"/>
             </LinearLayout>
         </LinearLayout>
 

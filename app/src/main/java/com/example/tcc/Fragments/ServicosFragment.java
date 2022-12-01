@@ -59,8 +59,6 @@ public class ServicosFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Toast.makeText(binding.getRoot().getContext(), cpf+"\n"+senha, Toast.LENGTH_SHORT).show();
-
         configurarRetrofit();
 
         Call<List<Tratamento>> chamadaAPI = apiCall.listarTratamentos();
@@ -104,7 +102,7 @@ public class ServicosFragment extends Fragment {
         }
 
         if (tratamentosFiltrados.isEmpty()) {
-            Toast.makeText(binding.getRoot().getContext(), "Sem resultados", Toast.LENGTH_SHORT).show();
+            Toast.makeText(binding.getRoot().getContext(), "Busca sem resultados", Toast.LENGTH_SHORT).show();
             //exibe nenhum item
             adapter = new TratamentoAdapter(binding.getRoot().getContext(), tratamentosFiltrados, cpf, senha);
             binding.recyclerViewTratamento.setAdapter(adapter);

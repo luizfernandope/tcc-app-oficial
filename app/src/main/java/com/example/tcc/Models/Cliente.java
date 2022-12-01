@@ -10,6 +10,8 @@ public class Cliente {
 
     private String telefone;
 
+    private String sexo;
+
     private String dtNascimento;
 
     private Usuario usuario;
@@ -44,6 +46,14 @@ public class Cliente {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
     }
 
     public String getDtNascimento() {

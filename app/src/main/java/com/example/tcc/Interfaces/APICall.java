@@ -1,5 +1,6 @@
 package com.example.tcc.Interfaces;
 
+import com.example.tcc.Dtos.ConsultaDto;
 import com.example.tcc.Models.Cliente;
 import com.example.tcc.Models.Consulta;
 import com.example.tcc.Models.Tratamento;
@@ -29,13 +30,25 @@ public interface APICall {
     @GET("consultas/listar/{cpf}/{senha}")
     Call<List<Consulta>> consultasCliente(@Path("cpf") String cpf, @Path("senha") String senha);// funcional
 
+    @POST("consultas")
+    Call<Consulta> marcarConsulta(@Body ConsultaDto consulta);
+
     @GET("usuario/login/{cpf}/{senha}")
     Call<Usuario> login(@Path("cpf") String cpf, @Path("senha") String senha); // funcional
 
     @GET("usuario/existe/{cpf}")
     Call<String> existeUsuarioByCPF(@Path("cpf") String cpf); // funcional
 
+    @POST("usuario")
+    Call<Usuario> cadastrarUsuario(@Body Usuario usuario);
+
+    @POST("clientes")
+    Call<Cliente> cadastrarCliente(@Body Cliente novoCliente);
+
     @GET("clientes/findCliente/{cpf}/{senha}")
     Call<Cliente> findCliente(@Path("cpf") String cpf, @Path("senha") String senha); // funcional
+
+    @GET("servico/{id}")
+    Call<Tratamento> findTratameto(@Path("id") Integer idTratamento); // funcional
 
 }

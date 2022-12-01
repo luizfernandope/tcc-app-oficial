@@ -17,8 +17,14 @@ import android.widget.CalendarView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.tcc.Dtos.ConsultaDto;
+import com.example.tcc.Interfaces.APICall;
+import com.example.tcc.Models.Consulta;
+import com.example.tcc.Models.Tratamento;
 import com.example.tcc.R;
 import com.example.tcc.databinding.ActivityMarcarConsultaBinding;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -27,14 +33,23 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class MarcarConsultaActivity extends AppCompatActivity {
 
     private ActivityMarcarConsultaBinding binding;
     private String data;
+    private String dateParaApi, timeParaApi, dateTimeParaApi;
     private LocalDate horarioEscolhido = LocalDate.now();
-    private Integer idTratamento = 0; //pegar o id do tratamento
+    private Integer idTratamento = 0, idClinica; //pegar o id do tratamento
     private String cpf, senha;
+    private APICall apiCall;
+    private Tratamento tratamento;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +59,8 @@ public class MarcarConsultaActivity extends AppCompatActivity {
 
         cpf = getIntent().getStringExtra("cpf");
         senha = getIntent().getStringExtra("senha");
-
-        Toast.makeText(MarcarConsultaActivity.this, "cliclou\n"+cpf+"\n"+senha, Toast.LENGTH_SHORT).show();//teste recebimento dos valores
+        idTratamento = getIntent().getIntExtra("idTratamento", 0);//pegando id do tratamento
+        pegarTratamento();
 
         //variaveis para configurar o calendario
         Date dataMaxFormatada = new Date();
@@ -68,6 +83,10 @@ public class MarcarConsultaActivity extends AppCompatActivity {
                 String diaString = horarioEscolhido.getDayOfWeek().getDisplayName(TextStyle.FULL, new Locale("pt", "br"));
                 String mesString = horarioEscolhido.getMonth().getDisplayName(TextStyle.FULL, new Locale("pt", "br"));
                 data = diaString + " " + dia + " de " + mesString + " de "+ ano;
+                if(mes>0 && mes<10)
+                    dateParaApi = dia+"/"+"0"+mes+"/"+ano;
+                else
+                    dateParaApi  = dia+"/"+mes+"/"+ano;
                 resetarHoras();
                 binding.tvDataConsulta.setText(data);
             }
@@ -87,11 +106,12 @@ public class MarcarConsultaActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
+                if(binding.spinnerClinicas.getSelectedItem().toString().contains("carapícuiba"))
+                    idClinica = 1;
+                else if(binding.spinnerClinicas.getSelectedItem().toString().contains("vila maria"))
+                    idClinica = 2;
             }
         });
-        idTratamento = getIntent().getIntExtra("idTratamento", 0);//pegando id do tratamento
-        Toast.makeText(this, "id tratamento = "+ idTratamento, Toast.LENGTH_SHORT).show();
     }
 
     public void configurarEndereco(String unidade){
@@ -109,6 +129,14 @@ public class MarcarConsultaActivity extends AppCompatActivity {
         horaSelecionada.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.borda_black_fill_blue, null));
         AppCompatButton b = (AppCompatButton)horaSelecionada;
         binding.tvDataConsulta.setText(data + " às " + b.getText());
+
+        LocalDate dataAgora = LocalDate.now();
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/YYYY"); //formato da api
+        if(dateParaApi == null)
+            dateParaApi = dataAgora.format(dateFormat);
+        timeParaApi = b.getText().toString();
+        dateTimeParaApi = dateParaApi + " " + timeParaApi;
+        Toast.makeText(this, dateTimeParaApi, Toast.LENGTH_SHORT).show();
     }
     private void resetarHoras(){
         binding.hora1.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.borda_black, null));
@@ -135,5 +163,63 @@ public class MarcarConsultaActivity extends AppCompatActivity {
 
     public void voltarTela(View view){
         onBackPressed();
+    }
+
+    void configurarRetrofit(){
+
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://clinica-tcc-api.herokuapp.com/")
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        // Instacia da interface;
+        apiCall = retrofit.create(APICall.class);
+    }
+
+    public void pegarTratamento(){
+        configurarRetrofit();
+        Call<Tratamento> findTratameto = apiCall.findTratameto(idTratamento);
+        findTratameto.enqueue(new Callback<Tratamento>() {
+            @Override
+            public void onResponse(Call<Tratamento> call, Response<Tratamento> response) {
+                if(response.code() == 200)
+                {
+                    tratamento = response.body();
+                }
+            }
+            @Override
+            public void onFailure(Call<Tratamento> call, Throwable t) {
+                onBackPressed();
+            }
+        });
+    }
+
+    public void efetuarAgendamento(View view){
+        configurarRetrofit();
+        ConsultaDto dados = new ConsultaDto();
+        dados.setValor(tratamento.getValor());
+        dados.setDatahora(dateTimeParaApi);
+        dados.setSituacao("Aguardando confirmação");
+        dados.setCpf_cliente(cpf);
+        dados.setId_servico(idTratamento);
+        dados.setId_clinica(4);
+
+        Call<Consulta> agendar = apiCall.marcarConsulta(dados);
+        agendar.enqueue(new Callback<Consulta>() {
+            @Override
+            public void onResponse(Call<Consulta> call, Response<Consulta> response) {
+                if(response.code() == 201)
+                    finish();
+            }
+
+            @Override
+            public void onFailure(Call<Consulta> call, Throwable t) {
+
+            }
+        });
     }
 }

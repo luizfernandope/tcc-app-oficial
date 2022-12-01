@@ -20,7 +20,6 @@ public class SobreConsultaActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         idConsulta = getIntent().getIntExtra("idConsulta", 0);
-        Toast.makeText(this, "id consulta = "+ idConsulta, Toast.LENGTH_SHORT).show();
     }
 
     public void voltarSobreConsulta(View view){

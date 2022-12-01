@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.tcc.Interfaces.APICall;
 import com.example.tcc.MainActivity;
+import com.example.tcc.Models.Cliente;
 import com.example.tcc.Models.Usuario;
 import com.example.tcc.databinding.ActivityLoginBinding;
 import com.google.gson.Gson;
@@ -61,7 +62,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                 if(response.isSuccessful())
                 {
-                    Toast.makeText(LoginActivity.this, response.body().getCpf()+"\n"+response.body().getSenha()+"\n"+response.body().getDt_admissao(), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     intent.putExtra("cpf", response.body().getCpf());
                     intent.putExtra("senha", response.body().getSenha());
@@ -129,4 +129,5 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(LoginActivity.this, Cadastro1Activity.class);
         startActivity(intent);
     }
+
 }

@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.tcc.Interfaces.APICall;
 import com.example.tcc.Models.Cliente;
@@ -59,7 +58,7 @@ public class PerfilFragment extends Fragment {
                     binding.etNome.setText(response.body().getNome());
                     binding.etMaskCPF.setText(response.body().getUsuario().getCpf());
                     binding.dataNasciEditTextPerfil.setText(response.body().getDtNascimento());
-                    binding.sexoEditTextPerfil.setText(response.body().getTelefone());
+                    binding.sexoEditTextPerfil.setText(response.body().getSexo());
                     binding.emailEditTextPerfil.setText(response.body().getEmail());
                 }
             }
@@ -70,7 +69,6 @@ public class PerfilFragment extends Fragment {
             }
         });
 
-        Toast.makeText(binding.getRoot().getContext(), cpf+"\n"+senha, Toast.LENGTH_SHORT).show();
     }
 
     public void carregarCliente(){
@@ -90,6 +88,5 @@ public class PerfilFragment extends Fragment {
 
         // Instacia da interface;
         apiCall = retrofit.create(APICall.class);
-
     }
 }

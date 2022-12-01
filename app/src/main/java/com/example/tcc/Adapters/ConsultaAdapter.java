@@ -49,8 +49,8 @@ public class ConsultaAdapter extends RecyclerView.Adapter<ConsultaViewHolder> {
         String endereco = clinica.getRua() +" "+ clinica.getNumero().toString();
         holder.titulo.setText(consulta.getServico().getNome());
         holder.endereco.setText(endereco);
-        holder.data.setText(consulta.getDatahora().substring(1,10));
-        holder.hora.setText(consulta.getDatahora().substring(12,16) + " H");
+        holder.data.setText(consulta.getDatahora().substring(0,10));
+        holder.hora.setText(consulta.getDatahora().substring(11,16) + " H");
         if(position<listConsultas.size()-1)
             holder.card.setPadding(0,0,0,20);
 
