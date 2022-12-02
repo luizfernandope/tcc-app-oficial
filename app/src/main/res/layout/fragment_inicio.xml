@@ -31,13 +31,16 @@
                     android:textColor="@color/white"
                     android:textSize="32dp"
                     android:textStyle="bold"/>
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="ola"
-                    android:textColor="@color/white"
-                    android:textSize="22dp"
-                    android:gravity="end"/>
+                    android:layout_height="match_parent"
+                    android:gravity="end|center_vertical">
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:background="@drawable/ic_interrogacao"
+                        android:backgroundTint="@color/white"/>
+                </LinearLayout>
             </LinearLayout>
 
             <androidx.viewpager.widget.ViewPager
@@ -88,6 +91,32 @@
                     app:cardCornerRadius="12dp"
                     android:layout_marginEnd="15dp">
                     <LinearLayout
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="center_vertical"
+                        android:paddingHorizontal="10dp">
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/ic_calendario"
+                            android:backgroundTint="@color/white"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="minha agenda"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="110dp"
+                    android:layout_height="100dp"
+                    android:backgroundTint="@color/azul"
+                    app:cardCornerRadius="12dp"
+                    android:layout_marginEnd="15dp">
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -96,13 +125,39 @@
                         <ImageView
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:background="@drawable/ic_person"
+                            android:background="@drawable/ic_dente"
                             android:backgroundTint="@color/white"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="minha agenda"
+                            android:text="ver serviços"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="110dp"
+                    android:layout_height="100dp"
+                    android:backgroundTint="@color/azul"
+                    app:cardCornerRadius="12dp"
+                    android:layout_marginEnd="15dp">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="center_vertical"
+                        android:paddingHorizontal="10dp">
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/ic_duvidas"
+                            android:backgroundTint="@color/white"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="perguntas frequentes"
                             android:textColor="@color/white"
                             android:textStyle="bold"/>
                     </LinearLayout>
@@ -122,19 +177,19 @@
                         <ImageView
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:background="@drawable/ic_person"
+                            android:background="@drawable/ic_termos_politicas"
                             android:backgroundTint="@color/white"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="minha agenda"
+                            android:text="políticas de uso"
                             android:textColor="@color/white"
                             android:textStyle="bold"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
+                    android:layout_width="110dp"
                     android:layout_height="100dp"
                     android:backgroundTint="@color/azul"
                     app:cardCornerRadius="12dp"
@@ -148,91 +203,13 @@
                         <ImageView
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:background="@drawable/ic_person"
+                            android:background="@drawable/ic_informacao"
                             android:backgroundTint="@color/white"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="minha agenda"
-                            android:textColor="@color/white"
-                            android:textStyle="bold"/>
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="100dp"
-                    android:backgroundTint="@color/azul"
-                    app:cardCornerRadius="12dp"
-                    android:layout_marginEnd="15dp">
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_gravity="center_vertical"
-                        android:paddingHorizontal="10dp">
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/ic_person"
-                            android:backgroundTint="@color/white"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="minha agenda"
-                            android:textColor="@color/white"
-                            android:textStyle="bold"/>
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="100dp"
-                    android:backgroundTint="@color/azul"
-                    app:cardCornerRadius="12dp"
-                    android:layout_marginEnd="15dp">
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_gravity="center_vertical"
-                        android:paddingHorizontal="10dp">
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/ic_person"
-                            android:backgroundTint="@color/white"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="minha agenda"
-                            android:textColor="@color/white"
-                            android:textStyle="bold"/>
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="100dp"
-                    android:backgroundTint="@color/azul"
-                    app:cardCornerRadius="12dp"
-                    android:layout_marginEnd="15dp">
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_gravity="center_vertical"
-                        android:paddingHorizontal="10dp">
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:background="@drawable/ic_person"
-                            android:backgroundTint="@color/white"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="minha agenda"
+                            android:text="sobre nós"
                             android:textColor="@color/white"
                             android:textStyle="bold"/>
                     </LinearLayout>

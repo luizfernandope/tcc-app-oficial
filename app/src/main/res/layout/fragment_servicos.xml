@@ -30,23 +30,26 @@
                     android:textColor="@color/white"
                     android:textSize="32dp"
                     android:textStyle="bold"/>
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="ola"
-                    android:textColor="@color/white"
-                    android:textSize="22dp"
-                    android:gravity="end"/>
+                    android:layout_height="match_parent"
+                    android:gravity="end|center_vertical">
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:background="@drawable/ic_interrogacao"
+                        android:backgroundTint="@color/white"/>
+                </LinearLayout>
             </LinearLayout>
+
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/barraPesquisa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_curvo12"
                 android:layout_marginVertical="15dp"
+                android:background="@drawable/bg_curvo12"
                 app:searchIcon="@drawable/ic_lupa"/>
-
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -59,7 +62,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="teste01"
+                        android:text="todos"
                         android:textColor="@color/white"
                         android:textSize="18dp"
                         android:background="@drawable/bg_curvo12"
@@ -69,7 +72,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="teste01"
+                        android:text="ortodontia"
                         android:textColor="@color/black"
                         android:textSize="18dp"
                         android:background="@drawable/bg_curvo12"
@@ -78,7 +81,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="teste01"
+                        android:text="endodontia"
                         android:textColor="@color/black"
                         android:textSize="18dp"
                         android:background="@drawable/bg_curvo12"
@@ -87,7 +90,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="teste01"
+                        android:text="peridontia"
                         android:textColor="@color/black"
                         android:textSize="18dp"
                         android:background="@drawable/bg_curvo12"
@@ -96,13 +99,48 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="teste01"
+                        android:text="clínica geral"
                         android:textColor="@color/black"
                         android:textSize="18dp"
                         android:background="@drawable/bg_curvo12"
                         android:padding="6dp"
                         android:layout_marginEnd="10dp"/>
-
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="implantes"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"
+                        android:background="@drawable/bg_curvo12"
+                        android:padding="6dp"
+                        android:layout_marginEnd="10dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="clareamento"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"
+                        android:background="@drawable/bg_curvo12"
+                        android:padding="6dp"
+                        android:layout_marginEnd="10dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="lentes"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"
+                        android:background="@drawable/bg_curvo12"
+                        android:padding="6dp"
+                        android:layout_marginEnd="10dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="facetas"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"
+                        android:background="@drawable/bg_curvo12"
+                        android:padding="6dp"
+                        android:layout_marginEnd="10dp"/>
                 </LinearLayout>
 
 

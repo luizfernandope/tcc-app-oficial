@@ -1,5 +1,6 @@
 package com.example.tcc.Fragments;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -8,7 +9,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,7 +19,9 @@ import android.widget.Toast;
 
 import com.example.tcc.Adapters.TratamentoAdapter;
 import com.example.tcc.Interfaces.APICall;
+import com.example.tcc.Models.Consulta;
 import com.example.tcc.Models.Tratamento;
+import com.example.tcc.R;
 import com.example.tcc.databinding.FragmentServicosBinding;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -84,7 +86,6 @@ public class ServicosFragment extends Fragment {
             });
         }
 
-
         binding.barraPesquisa.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -93,15 +94,15 @@ public class ServicosFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                adapter.notifyDataSetChanged();
+                binding.barraPesquisa.setBackgroundResource(R.drawable.borda_black_fill_blue);
                 verificarPesquisa(newText);
                 return true;
             }
+
         });
     }
 
     private void verificarPesquisa(String texto) {
-        adapter.notifyDataSetChanged();
         System.out.println("\n\nmetodo barra de pesquisa\n");
         ArrayList<Tratamento> tratamentosFiltrados = new ArrayList<>();
         for(Tratamento t: tratamentos){
@@ -109,18 +110,9 @@ public class ServicosFragment extends Fragment {
                 tratamentosFiltrados.add(t);
             }
         }
-
-        if (tratamentosFiltrados.isEmpty()) {
-            Toast.makeText(binding.getRoot().getContext(), "Busca sem resultados", Toast.LENGTH_SHORT).show();
-            //exibe nenhum item
-            adapter = new TratamentoAdapter(getContext(), tratamentosFiltrados, cpf, senha);
-            recyclerViewTratamentos.setAdapter(adapter);
-        }
-        else{
-            //exibe os itens
-            adapter = new TratamentoAdapter(getContext(), tratamentosFiltrados, cpf, senha);
-            recyclerViewTratamentos.setAdapter(adapter);
-        }
+        //exibe os itens
+        adapter = new TratamentoAdapter(getContext(), tratamentosFiltrados, cpf, senha);
+        recyclerViewTratamentos.setAdapter(adapter);
     }
 
     @Override
