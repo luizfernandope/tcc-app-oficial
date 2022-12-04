@@ -20,4 +20,15 @@
         <item>c4</item>
     </string-array>
 
+    <string-array name="array_tiposTratamentos">
+        <item>endodontia</item>
+        <item>ortodontia</item>
+        <item>peridontia</item>
+        <item>clínico geral</item>
+        <item>implante</item>
+        <item>clareamento</item>
+        <item>lentes</item>
+        <item>facetas</item>
+    </string-array>
+
 </resources>

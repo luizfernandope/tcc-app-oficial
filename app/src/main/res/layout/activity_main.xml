@@ -28,9 +28,4 @@
             app:mbn_defaultIconColor="@color/icon_menu_unselect"
             app:mbn_selectedIconColor="@color/azul"
             app:mbn_shadowColor="@color/sobra_menu"/>
-
-
-
-
-
 </LinearLayout>

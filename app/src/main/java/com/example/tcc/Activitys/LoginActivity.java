@@ -65,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     intent.putExtra("cpf", response.body().getCpf());
                     intent.putExtra("senha", response.body().getSenha());
+                    intent.putExtra("cliente", response.body().isCliente());
                     startActivity(intent);
                     finish();//fecha activity login
                 }
@@ -87,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://clinica-tcc-api.herokuapp.com/")
+                .baseUrl("http://ec2-54-164-21-210.compute-1.amazonaws.com:8080/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 

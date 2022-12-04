@@ -1,17 +1,15 @@
 package com.example.tcc.Activitys;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.tcc.Interfaces.APICall;
 import com.example.tcc.Models.Tratamento;
-import com.example.tcc.databinding.ActivitySobreTratamentoBinding;
+import com.example.tcc.R;
+import com.example.tcc.databinding.ActivityEditarTratamentoBinding;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -20,31 +18,28 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-@RequiresApi(api = Build.VERSION_CODES.O)
-public class SobreTratamentoActivity extends AppCompatActivity {
 
-    private ActivitySobreTratamentoBinding binding;
-    private String cpf, senha;
+public class EditarTratamentoActivity extends AppCompatActivity {
+
+    private ActivityEditarTratamentoBinding binding;
     private Integer idTratamento;
     private APICall apiCall;
-    Tratamento tratamento = new Tratamento();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivitySobreTratamentoBinding.inflate(getLayoutInflater());
+        binding = ActivityEditarTratamentoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        cpf = getIntent().getStringExtra("cpf");
-        senha = getIntent().getStringExtra("senha");
         idTratamento = getIntent().getIntExtra("idTratamento", 0);
-
-        formatarTextos();
-
-    }
-
-    public void voltarSobreTratamento(View view){
-        onBackPressed();
+        if(idTratamento == 0) {
+            binding.boxNomeTratamento.setVisibility(View.VISIBLE);
+            binding.tvNomeTratamento.setText("Novo serviço");
+            binding.tvSubtitulo.setText("Criação de tratamento");
+            binding.btnSalvar.setText("Cadastrar serviço");
+        }
+        else
+            formatarTextos();
     }
 
     void configurarRetrofit(){
@@ -64,34 +59,34 @@ public class SobreTratamentoActivity extends AppCompatActivity {
 
     public void formatarTextos(){
         configurarRetrofit();
+        String tipo[] = getResources().getStringArray(R.array.array_tiposTratamentos);
         Call<Tratamento> findTratameto = apiCall.findTratameto(idTratamento);
         findTratameto.enqueue(new Callback<Tratamento>() {
             @Override
             public void onResponse(Call<Tratamento> call, Response<Tratamento> response) {
                 if(response.code() == 200)
                 {
-                    tratamento = response.body();
-                    binding.tvDescricaoTratamento.setText(response.body().getDescricao());
-                    binding.tvDuracaoTratamento.setText(response.body().getTempo() + " Hora(s).");
-                    binding.tvPqFazerTratamento.setText(response.body().getDescricao());
-                    binding.tvTipoTratamento.setText(response.body().getTipo());
-                    binding.tvSessoesTratamento.setText(response.body().getId().toString() + " sessões");
-                    binding.tvValorTratamento.setText("R$ " + response.body().getValor().toString());
+                    //preenche com os valores
+                    binding.tvNomeTratamento.setText(response.body().getNome());
+                    binding.etDescricao.setText(response.body().getDescricao());
+                    binding.etPqFazer.setText(response.body().getDescricao());
+                    binding.etHoras.setText(response.body().getTempo());
+                    binding.etQtdSessoes.setText(response.body().getId().toString());
+                    binding.etPreco.setText(response.body().getValor().toString());
+                    for(int i = tipo.length-1; i >=0; i--){
+                        if(tipo[i].contains(response.body().getTipo()))
+                            binding.spinnerClinicas.setSelection(i);
+                    }
                 }
             }
             @Override
             public void onFailure(Call<Tratamento> call, Throwable t) {
-                Toast.makeText(SobreTratamentoActivity.this, "erro de requisicao", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditarTratamentoActivity.this, "erro de requisicao", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-
-    public void irParaAgendamento(View view){
-        Intent intent = new Intent(SobreTratamentoActivity.this, MarcarConsultaActivity.class);
-        intent.putExtra("idTratamento", idTratamento);
-        intent.putExtra("cpf", cpf);
-        intent.putExtra("senha", senha);
-        startActivity(intent);
+    public void voltarSobreTratamento(View view){
+        onBackPressed();
     }
 }

@@ -56,96 +56,109 @@
                 android:layout_height="wrap_content"
                 android:scrollbars="none">
                 <LinearLayout
+                    android:id="@+id/layoutFiltros"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatButton
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="todos"
-                        android:textColor="@color/white"
-                        android:textSize="18dp"
+                        android:layout_height="38dp"
+                        android:layout_marginEnd="10dp"
                         android:background="@drawable/bg_curvo12"
                         android:backgroundTint="@color/azul"
-                        android:padding="6dp"
-                        android:layout_marginEnd="10dp"/>
-                    <TextView
+                        android:paddingHorizontal="6dp"
+                        android:text="Todos"
+                        android:textColor="@color/white"
+                        android:textSize="18dp" />
+                    <androidx.appcompat.widget.AppCompatButton
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="38dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/bg_curvo12"
+                        android:paddingHorizontal="6dp"
                         android:text="ortodontia"
                         android:textColor="@color/black"
-                        android:textSize="18dp"
-                        android:background="@drawable/bg_curvo12"
-                        android:padding="6dp"
-                        android:layout_marginEnd="10dp"/>
-                    <TextView
+                        android:textSize="16dp" />
+                    <androidx.appcompat.widget.AppCompatButton
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="38dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/bg_curvo12"
+                        android:paddingHorizontal="6dp"
                         android:text="endodontia"
                         android:textColor="@color/black"
-                        android:textSize="18dp"
-                        android:background="@drawable/bg_curvo12"
-                        android:padding="6dp"
-                        android:layout_marginEnd="10dp"/>
-                    <TextView
+                        android:textSize="16dp" />
+                    <androidx.appcompat.widget.AppCompatButton
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="38dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/bg_curvo12"
+                        android:paddingHorizontal="6dp"
                         android:text="peridontia"
                         android:textColor="@color/black"
-                        android:textSize="18dp"
-                        android:background="@drawable/bg_curvo12"
-                        android:padding="6dp"
-                        android:layout_marginEnd="10dp"/>
-                    <TextView
+                        android:textSize="16dp" />
+                    <androidx.appcompat.widget.AppCompatButton
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="38dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/bg_curvo12"
+                        android:paddingHorizontal="6dp"
                         android:text="clínica geral"
                         android:textColor="@color/black"
-                        android:textSize="18dp"
-                        android:background="@drawable/bg_curvo12"
-                        android:padding="6dp"
-                        android:layout_marginEnd="10dp"/>
-                    <TextView
+                        android:textSize="16dp" />
+                    <androidx.appcompat.widget.AppCompatButton
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="38dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/bg_curvo12"
+                        android:paddingHorizontal="6dp"
                         android:text="implantes"
                         android:textColor="@color/black"
-                        android:textSize="18dp"
-                        android:background="@drawable/bg_curvo12"
-                        android:padding="6dp"
-                        android:layout_marginEnd="10dp"/>
-                    <TextView
+                        android:textSize="16dp" />
+                    <androidx.appcompat.widget.AppCompatButton
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="38dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/bg_curvo12"
+                        android:paddingHorizontal="6dp"
                         android:text="clareamento"
                         android:textColor="@color/black"
-                        android:textSize="18dp"
-                        android:background="@drawable/bg_curvo12"
-                        android:padding="6dp"
-                        android:layout_marginEnd="10dp"/>
-                    <TextView
+                        android:textSize="16dp" />
+                    <androidx.appcompat.widget.AppCompatButton
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="38dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/bg_curvo12"
+                        android:paddingHorizontal="6dp"
                         android:text="lentes"
                         android:textColor="@color/black"
-                        android:textSize="18dp"
-                        android:background="@drawable/bg_curvo12"
-                        android:padding="6dp"
-                        android:layout_marginEnd="10dp"/>
-                    <TextView
+                        android:textSize="16dp" />
+                    <androidx.appcompat.widget.AppCompatButton
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="38dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/bg_curvo12"
+                        android:paddingHorizontal="6dp"
                         android:text="facetas"
                         android:textColor="@color/black"
-                        android:textSize="18dp"
-                        android:background="@drawable/bg_curvo12"
-                        android:padding="6dp"
-                        android:layout_marginEnd="10dp"/>
+                        android:textSize="16dp" />
                 </LinearLayout>
-
-
-
             </HorizontalScrollView>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnAdicionarServico"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_curvo12"
+                android:layout_marginTop="15dp"
+                android:text="addicionar novo serviço"
+                android:textColor="@color/black"
+                android:layout_marginHorizontal="40dp"
+                android:drawableStart="@drawable/ic_plus_square"
+                android:drawablePadding="10dp"
+                android:paddingStart="10dp"
+                android:textAlignment="textStart"
+                android:visibility="gone"/>
 
         </LinearLayout>
 

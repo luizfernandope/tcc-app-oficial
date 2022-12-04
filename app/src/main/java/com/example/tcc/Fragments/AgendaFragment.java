@@ -87,7 +87,7 @@ public class AgendaFragment extends Fragment {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://clinica-tcc-api.herokuapp.com/")
+                .baseUrl("http://ec2-54-164-21-210.compute-1.amazonaws.com:8080/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 

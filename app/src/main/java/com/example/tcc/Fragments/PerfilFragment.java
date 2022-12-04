@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.tcc.Interfaces.APICall;
 import com.example.tcc.Models.Cliente;
+import com.example.tcc.Models.Funcionario;
 import com.example.tcc.R;
 import com.example.tcc.databinding.FragmentPerfilBinding;
 import com.google.gson.Gson;
@@ -32,6 +33,8 @@ public class PerfilFragment extends Fragment {
 
     private String cpf, senha;
     private Cliente cliente;
+    private Funcionario funcionario;
+    boolean ehFuncionario = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,6 +55,8 @@ public class PerfilFragment extends Fragment {
 
         if(cliente == null)
             carregarCliente();
+        if(funcionario == null)
+            carregarFuncionario();
 
 
         binding.btnEditarPefil.setOnClickListener(new View.OnClickListener() {
@@ -61,11 +66,16 @@ public class PerfilFragment extends Fragment {
                 {
                     binding.btnEditarPefil.setBackgroundResource(R.drawable.bg_curvo12);
                     binding.btnEditarPefil.setText("salvar");
-
-                    binding.etNome.setEnabled(true);
-                    binding.emailEditTextPerfil.setEnabled(true);
-                    binding.dataNasciEditTextPerfil.setEnabled(true);
-                    binding.sexoEditTextPerfil.setEnabled(true);
+                    if(cliente != null) {
+                        binding.etNome.setEnabled(true);
+                        binding.emailEditTextPerfil.setEnabled(true);
+                        binding.dataNasciEditTextPerfil.setEnabled(true);
+                        binding.sexoEditTextPerfil.setEnabled(true);
+                    }
+                    else{
+                        binding.etNome.setEnabled(true);
+                        binding.emailEditTextPerfil.setEnabled(true);
+                    }
                 }
                 else{
                     atualizarPerfil();
@@ -89,10 +99,38 @@ public class PerfilFragment extends Fragment {
                     binding.emailEditTextPerfil.setText(response.body().getEmail());
                     cliente = response.body();
                 }
+                else{
+                    ehFuncionario = true;
+                    carregarFuncionario();
+                }
             }
 
             @Override
             public void onFailure(Call<Cliente> call, Throwable t) {
+            }
+        });
+    }
+
+    public void carregarFuncionario(){
+        configurarRetrofit();
+        Call<Funcionario> pegarFuncionario = apiCall.findFuncionario(cpf, senha);
+        pegarFuncionario.enqueue(new Callback<Funcionario>() {
+            @Override
+            public void onResponse(Call<Funcionario> call, Response<Funcionario> response) {
+                if(response.isSuccessful()){
+                    binding.etNome.setText(response.body().getNome());
+                    binding.etMaskCPF.setText(response.body().getUsuario().getCpf());
+                    binding.dataNasciEditTextPerfil.setVisibility(View.GONE);
+                    binding.dataNasciContainerPerfil.setVisibility(View.GONE);
+                    binding.sexoEditTextPerfil.setText(response.body().getCargo());
+                    binding.emailEditTextPerfil.setText(response.body().getEmail());
+                    funcionario = response.body();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Funcionario> call, Throwable t) {
+
             }
         });
     }
@@ -104,7 +142,7 @@ public class PerfilFragment extends Fragment {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://clinica-tcc-api.herokuapp.com/")
+                .baseUrl("http://ec2-54-164-21-210.compute-1.amazonaws.com:8080/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
@@ -114,35 +152,59 @@ public class PerfilFragment extends Fragment {
 
     public void atualizarPerfil(){
         configurarRetrofit();
-        cliente.setNome(binding.etNome.getText().toString());
-        cliente.setDtNascimento(binding.dataNasciEditTextPerfil.getText().toString());
-        cliente.setSexo(binding.sexoEditTextPerfil.getText().toString());
-        cliente.setEmail(binding.emailEditTextPerfil.getText().toString());
-        Call<Cliente> clienteCall = apiCall.atualizarCliente(cliente);
-        clienteCall.enqueue(new Callback<Cliente>() {
-            @Override
-            public void onResponse(Call<Cliente> call, Response<Cliente> response) {
-                if(response.code() == 200)
-                {
-                    Toast.makeText(getContext(), "Atualização de perfil bem sucedida", Toast.LENGTH_SHORT).show();
-                    binding.btnEditarPefil.setBackgroundResource(R.drawable.borda_black);
-                    binding.btnEditarPefil.setText("editar perfil");
+        if(!ehFuncionario) {
+            cliente.setNome(binding.etNome.getText().toString());
+            cliente.setDtNascimento(binding.dataNasciEditTextPerfil.getText().toString());
+            cliente.setSexo(binding.sexoEditTextPerfil.getText().toString());
+            cliente.setEmail(binding.emailEditTextPerfil.getText().toString());
+            Call<Cliente> clienteCall = apiCall.atualizarCliente(cliente);
+            clienteCall.enqueue(new Callback<Cliente>() {
+                @Override
+                public void onResponse(Call<Cliente> call, Response<Cliente> response) {
+                    if (response.code() == 200) {
+                        Toast.makeText(getContext(), "Atualização de perfil bem sucedida", Toast.LENGTH_SHORT).show();
+                        binding.btnEditarPefil.setBackgroundResource(R.drawable.borda_black);
+                        binding.btnEditarPefil.setText("editar perfil");
 
-                    binding.etNome.setEnabled(false);
-                    binding.emailEditTextPerfil.setEnabled(false);
-                    binding.dataNasciEditTextPerfil.setEnabled(false);
-                    binding.sexoEditTextPerfil.setEnabled(false);
+                        binding.etNome.setEnabled(false);
+                        binding.emailEditTextPerfil.setEnabled(false);
+                        binding.dataNasciEditTextPerfil.setEnabled(false);
+                        binding.sexoEditTextPerfil.setEnabled(false);
 
+                    } else
+                        Toast.makeText(getContext(), "Falha ao atualizar perfil!!!", Toast.LENGTH_SHORT).show();
                 }
-                else
-                    Toast.makeText(getContext(), "Falha ao atualizar perfil!!!", Toast.LENGTH_SHORT).show();
-            }
 
-            @Override
-            public void onFailure(Call<Cliente> call, Throwable t) {
-                Toast.makeText(getContext(), "Falha requisicao de atualizacao", Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onFailure(Call<Cliente> call, Throwable t) {
+                    Toast.makeText(getContext(), "Falha requisicao de atualizacao", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        else if (ehFuncionario){
+            funcionario.setNome(binding.etNome.getText().toString());
+            funcionario.setEmail(binding.emailEditTextPerfil.getText().toString());
+            Call<Funcionario> funcionarioCall = apiCall.atualizarFuncionario(funcionario);
+            funcionarioCall.enqueue(new Callback<Funcionario>() {
+                @Override
+                public void onResponse(Call<Funcionario> call, Response<Funcionario> response) {
+                    if(response.isSuccessful()){
+                        Toast.makeText(getContext(), "Atualização de perfil bem sucedida", Toast.LENGTH_SHORT).show();
+                        binding.btnEditarPefil.setBackgroundResource(R.drawable.borda_black);
+                        binding.btnEditarPefil.setText("editar perfil");
+                        binding.etNome.setEnabled(false);
+                        binding.emailEditTextPerfil.setEnabled(false);
+                    }
+                    else
+                        Toast.makeText(getContext(), "Falha ao atualizar perfil!!!", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(Call<Funcionario> call, Throwable t) {
+                    Toast.makeText(getContext(), "Falha requisicao de atualizacao", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
 
     }
 }

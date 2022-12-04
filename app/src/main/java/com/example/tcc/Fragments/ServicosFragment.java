@@ -15,8 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.tcc.Activitys.EditarTratamentoActivity;
+import com.example.tcc.Activitys.SobreTratamentoActivity;
 import com.example.tcc.Adapters.TratamentoAdapter;
 import com.example.tcc.Interfaces.APICall;
 import com.example.tcc.Models.Consulta;
@@ -28,6 +32,7 @@ import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,8 +47,12 @@ public class ServicosFragment extends Fragment {
     APICall apiCall;
     TratamentoAdapter adapter;
     ArrayList<Tratamento> tratamentos = new ArrayList<Tratamento>();
-    private String cpf, senha;
+    private String cpf, senha, email;
     RecyclerView recyclerViewTratamentos;
+    private Boolean cliente;
+    LinearLayout layoutBtnFiltros;
+    int sizeListaDeBotoesFiltro;
+    int btnFiltroAtual;
 
 
     @Override
@@ -54,6 +63,12 @@ public class ServicosFragment extends Fragment {
         Bundle bundle = getArguments();
         cpf = bundle.getString("cpf");
         senha = bundle.getString("senha");
+        cliente = bundle.getBoolean("cliente", true);
+
+        if(!cliente)
+            binding.btnAdicionarServico.setVisibility(View.VISIBLE);
+
+        layoutBtnFiltros = binding.layoutFiltros;
 
         recyclerViewTratamentos = binding.recyclerViewTratamento;
         return binding.getRoot();
@@ -100,6 +115,68 @@ public class ServicosFragment extends Fragment {
             }
 
         });
+
+        binding.btnAdicionarServico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), EditarTratamentoActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
+
+        //congigurando botoes de filtro
+        // pega todos os botões de filtro que estão dentro do linearLayout.
+        List<View> listaDeBotoesFiltro =  layoutBtnFiltros.getTouchables();
+
+
+        sizeListaDeBotoesFiltro = listaDeBotoesFiltro.size();
+        for (int i = 0; i < sizeListaDeBotoesFiltro; i++){
+
+            listaDeBotoesFiltro.get(i).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    // Loop para obter qual é o índice do botão clicado dentro da lista de botões (listaDeBotoesFiltro).
+                    for (int i = 0; i < sizeListaDeBotoesFiltro; i++){
+                        System.out.println("Clicado ID --> " + view.getId() + "Posição ID --> " + listaDeBotoesFiltro.get(i).getId());
+                        // Se o btn clicado for o botao equivalente na lista de botoes.
+                        if(((Button) view) == ((Button) listaDeBotoesFiltro.get(i))) {
+                            System.out.println("\nI -->" + i);
+                            btnFiltroAtual = i;
+                        }
+                    }
+
+                    adapter.notifyDataSetChanged();
+                    String filtro = ((Button) view).getText().toString().toLowerCase(Locale.ROOT);
+
+                    System.out.println("\n\nFiltro --> " + filtro);
+                    ArrayList<Tratamento> tratamentosFiltrados = new ArrayList<>();
+                    for(Tratamento t: tratamentos){
+                        if(filtro.matches("todos")){
+                            tratamentosFiltrados.add(t);
+                        }else if(t.getTipo().matches(filtro)){
+                            System.out.println("\n\nFiltragem de tipos.");
+                            tratamentosFiltrados.add(t);
+                        }
+                    }
+                    //exibe os itens
+                    adapter = new TratamentoAdapter(getContext(), tratamentosFiltrados, cpf, senha, cliente);
+                    recyclerViewTratamentos.setAdapter(adapter);
+
+                    // Alterando cores de botao, de acordo se ele foi clicado ou não.
+                    for (int j = 0; j < sizeListaDeBotoesFiltro; j++){
+                        System.out.println("J --> " + j + " - Atual --> " + btnFiltroAtual);
+                        if (j != btnFiltroAtual){
+                            listaDeBotoesFiltro.get(j).setBackgroundTintList(getContext().getResources().getColorStateList(R.color.white));
+                            ((Button)listaDeBotoesFiltro.get(j)).setTextColor(getContext().getResources().getColorStateList(R.color.black));
+                        } else{
+                            ((Button) view).setBackgroundTintList(getContext().getResources().getColorStateList(R.color.azul));
+                            ((Button) view).setTextColor(getContext().getResources().getColorStateList(R.color.white));
+                        }
+                    }
+                }
+            });
+        }
     }
 
     private void verificarPesquisa(String texto) {
@@ -111,7 +188,7 @@ public class ServicosFragment extends Fragment {
             }
         }
         //exibe os itens
-        adapter = new TratamentoAdapter(getContext(), tratamentosFiltrados, cpf, senha);
+        adapter = new TratamentoAdapter(getContext(), tratamentosFiltrados, cpf, senha, cliente);
         recyclerViewTratamentos.setAdapter(adapter);
     }
 
@@ -130,7 +207,7 @@ public class ServicosFragment extends Fragment {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://clinica-tcc-api.herokuapp.com/")
+                .baseUrl("http://ec2-54-164-21-210.compute-1.amazonaws.com:8080/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
@@ -141,7 +218,7 @@ public class ServicosFragment extends Fragment {
 
     void inicializarListagem(){
         recyclerViewTratamentos.setHasFixedSize(true);//da mais desempenho na listagem
-        adapter = new TratamentoAdapter(getContext(), tratamentos, cpf, senha);
+        adapter = new TratamentoAdapter(getContext(), tratamentos, cpf, senha, cliente);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerViewTratamentos.setLayoutManager(layoutManager);
         recyclerViewTratamentos.setAdapter(adapter);

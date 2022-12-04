@@ -3,6 +3,7 @@ package com.example.tcc.Interfaces;
 import com.example.tcc.Dtos.ConsultaDto;
 import com.example.tcc.Models.Cliente;
 import com.example.tcc.Models.Consulta;
+import com.example.tcc.Models.Funcionario;
 import com.example.tcc.Models.Tratamento;
 import com.example.tcc.Models.Usuario;
 
@@ -54,6 +55,12 @@ public interface APICall {
 
     @PUT("clientes/atualizarCliente")
     Call<Cliente> atualizarCliente(@Body Cliente cliente);
+
+    @GET("funcionarios/findFuncionario/{cpf}/{senha}")
+    Call<Funcionario> findFuncionario(@Path("cpf") String cpf, @Path("senha") String senha);
+
+    @PUT("funcionarios/atualizar")
+    Call<Funcionario> atualizarFuncionario(@Body Funcionario funcionario);
 
     @GET("servico/{id}")
     Call<Tratamento> findTratameto(@Path("id") Integer idTratamento);

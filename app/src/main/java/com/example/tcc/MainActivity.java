@@ -15,6 +15,7 @@ import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.tcc.Activitys.SobreTratamentoActivity;
 import com.example.tcc.Fragments.AgendaFragment;
 import com.example.tcc.Fragments.InicioFragment;
+import com.example.tcc.Fragments.InicioFuncionarioFragment;
 import com.example.tcc.Fragments.PerfilFragment;
 import com.example.tcc.Fragments.ServicosFragment;
 import com.example.tcc.databinding.ActivityMainBinding;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     public String cpf, senha;
     private int idTelaAtual;
+    boolean cliente;
 
 
     @Override
@@ -34,11 +36,23 @@ public class MainActivity extends AppCompatActivity {
 
         cpf = getIntent().getStringExtra("cpf");
         senha = getIntent().getStringExtra("senha");
+        cliente = getIntent().getBooleanExtra("cliente", true);
 
-        binding.bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.ic_home));
-        binding.bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.ic_lupa));
-        binding.bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.ic_calendario));
-        binding.bottomNavigation.add(new MeowBottomNavigation.Model(4, R.drawable.ic_person));
+        if(cliente) {
+            binding.bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.ic_home));
+            binding.bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.ic_lupa));
+            binding.bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.ic_calendario));
+            binding.bottomNavigation.add(new MeowBottomNavigation.Model(4, R.drawable.ic_person));
+        }
+        else if (!cliente)
+        {
+            binding.bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.ic_home));
+            binding.bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.ic_lupa));
+            binding.bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.ic_calendario));
+            binding.bottomNavigation.add(new MeowBottomNavigation.Model(4, R.drawable.ic_dinheiro));
+            binding.bottomNavigation.add(new MeowBottomNavigation.Model(5, R.drawable.ic_pessoas));
+            binding.bottomNavigation.add(new MeowBottomNavigation.Model(6, R.drawable.ic_person));
+        }
 
         binding.bottomNavigation.setOnClickMenuListener(new MeowBottomNavigation.ClickListener() {
             @Override
@@ -75,18 +89,37 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment fragment = new InicioFragment();
-        if(idTela == 1)
-            fragment = new InicioFragment();
-        else if(idTela == 2)
-            fragment = new ServicosFragment();
-        else if(idTela == 3)
-            fragment = new AgendaFragment();
-        else if(idTela == 4)
-            fragment = new PerfilFragment();
+
+        if(cliente){
+            if(idTela == 1)
+                fragment = new InicioFragment();
+            else if(idTela == 2)
+                fragment = new ServicosFragment();
+            else if(idTela == 3)
+                fragment = new AgendaFragment();
+            else if(idTela == 4)
+                fragment = new PerfilFragment();
+        }
+        else if(!cliente){
+            if(idTela == 1)
+                fragment = new InicioFuncionarioFragment();
+            else if(idTela == 2)
+                fragment = new ServicosFragment();
+            else if(idTela == 3)
+                fragment = new AgendaFragment();
+//            else if(idTela == 4)
+////                fragment = new PerfilFragment();
+//            else if(idTela == 5)
+//                fragment = new PerfilFragment();
+            else if(idTela == 6)
+                fragment = new PerfilFragment();
+        }
         //passando os dados para os fragments
         Bundle bundle = new Bundle();
         bundle.putString("cpf", cpf);
         bundle.putString("senha", senha);
+        if(idTela == 2)
+            bundle.putBoolean("cliente", cliente);
         fragment.setArguments(bundle);
         //iniciando os fragments no frame layout
         fragmentTransaction.replace(binding.frameLayoutTelas.getId(), fragment);

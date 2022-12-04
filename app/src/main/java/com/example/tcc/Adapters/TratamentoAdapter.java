@@ -14,6 +14,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tcc.Activitys.EditarTratamentoActivity;
 import com.example.tcc.Activitys.MarcarConsultaActivity;
 import com.example.tcc.Activitys.SobreTratamentoActivity;
 import com.example.tcc.Fragments.ServicosFragment;
@@ -29,12 +30,14 @@ public class TratamentoAdapter extends RecyclerView.Adapter<TratamentoViewHolder
     private Context context;
     private ArrayList<Tratamento> listTratamentos;
     private String cpf, senha;
+    private Boolean cliente;
 
-    public TratamentoAdapter(Context ctx,ArrayList<Tratamento> listTratamentos, String cpf, String senha) {
+    public TratamentoAdapter(Context ctx,ArrayList<Tratamento> listTratamentos, String cpf, String senha, Boolean cliente) {
         this.context = ctx;
         this.listTratamentos = listTratamentos;
         this.cpf = cpf;
-        this. senha = senha;
+        this.senha = senha;
+        this.cliente = cliente;
     }
 
 
@@ -49,6 +52,11 @@ public class TratamentoAdapter extends RecyclerView.Adapter<TratamentoViewHolder
     @Override
     public void onBindViewHolder(@NonNull TratamentoViewHolder holder, int position) { // quando carrega um valor
         int qtd = listTratamentos.size();
+        if(!cliente)
+        {
+            holder.marcar1.setText("editar tratamento");
+            holder.marcar2.setText("editar tratamento");
+        }
 
         if(proximo!=0 && proximo +1 <qtd)
             proximo = position+1;
@@ -65,22 +73,36 @@ public class TratamentoAdapter extends RecyclerView.Adapter<TratamentoViewHolder
             holder.card1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, SobreTratamentoActivity.class);
-                    intent.putExtra("idTratamento", card1.getId());
-                    intent.putExtra("cpf", cpf);
-                    intent.putExtra("senha", senha);
-                    context.startActivity(intent);
+                    if(cliente) {
+                        Intent intent = new Intent(context, SobreTratamentoActivity.class);
+                        intent.putExtra("idTratamento", card1.getId());
+                        intent.putExtra("cpf", cpf);
+                        intent.putExtra("senha", senha);
+                        context.startActivity(intent);
+                    }
+                    else if(cliente == false){
+                        Intent intent = new Intent(context, EditarTratamentoActivity.class);
+                        intent.putExtra("idTratamento", card1.getId());
+                        context.startActivity(intent);
+                    }
                 }
             });
             //quando clicar em marcar consulta
             holder.marcar1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, MarcarConsultaActivity.class);
-                    intent.putExtra("idTratamento", card1.getId());
-                    intent.putExtra("cpf", cpf);
-                    intent.putExtra("senha", senha);
-                    context.startActivity(intent);
+                    if(cliente) {
+                        Intent intent = new Intent(context, MarcarConsultaActivity.class);
+                        intent.putExtra("idTratamento", card1.getId());
+                        intent.putExtra("cpf", cpf);
+                        intent.putExtra("senha", senha);
+                        context.startActivity(intent);
+                    }
+                    else if(cliente == false){
+                        Intent intent = new Intent(context, EditarTratamentoActivity.class);
+                        intent.putExtra("idTratamento", card1.getId());
+                        context.startActivity(intent);
+                    }
                 }
             });
         }
@@ -99,22 +121,36 @@ public class TratamentoAdapter extends RecyclerView.Adapter<TratamentoViewHolder
             holder.card2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, SobreTratamentoActivity.class);
-                    intent.putExtra("idTratamento", card2.getId());
-                    intent.putExtra("cpf", cpf);
-                    intent.putExtra("senha", senha);
-                    context.startActivity(intent);
+                    if(cliente) {
+                        Intent intent = new Intent(context, SobreTratamentoActivity.class);
+                        intent.putExtra("idTratamento", card2.getId());
+                        intent.putExtra("cpf", cpf);
+                        intent.putExtra("senha", senha);
+                        context.startActivity(intent);
+                    }
+                    else if(cliente == false){
+                        Intent intent = new Intent(context, EditarTratamentoActivity.class);
+                        intent.putExtra("idTratamento", card2.getId());
+                        context.startActivity(intent);
+                    }
                 }
             });
             //quando clicar em marcar consulta
             holder.marcar2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, MarcarConsultaActivity.class);
-                    intent.putExtra("idTratamento", card2.getId());
-                    intent.putExtra("cpf", cpf);
-                    intent.putExtra("senha", senha);
-                    context.startActivity(intent);
+                    if(cliente) {
+                        Intent intent = new Intent(context, MarcarConsultaActivity.class);
+                        intent.putExtra("idTratamento", card2.getId());
+                        intent.putExtra("cpf", cpf);
+                        intent.putExtra("senha", senha);
+                        context.startActivity(intent);
+                    }
+                    else if(cliente == false){
+                        Intent intent = new Intent(context, EditarTratamentoActivity.class);
+                        intent.putExtra("idTratamento", card2.getId());
+                        context.startActivity(intent);
+                    }
                 }
             });
         }

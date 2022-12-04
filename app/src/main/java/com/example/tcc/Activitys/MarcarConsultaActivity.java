@@ -108,14 +108,15 @@ public class MarcarConsultaActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String unidade = adapterView.getSelectedItem().toString();
                 configurarEndereco(unidade);
+                if(binding.spinnerClinicas.getSelectedItem().toString().contains("carapícuiba"))
+                    idClinica = 4;
+                else if(binding.spinnerClinicas.getSelectedItem().toString().contains("vila maria"))
+                    idClinica = 3;
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                if(binding.spinnerClinicas.getSelectedItem().toString().contains("carapícuiba"))
-                    idClinica = 1;
-                else if(binding.spinnerClinicas.getSelectedItem().toString().contains("vila maria"))
-                    idClinica = 2;
+
             }
         });
     }
@@ -178,7 +179,7 @@ public class MarcarConsultaActivity extends AppCompatActivity {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://clinica-tcc-api.herokuapp.com/")
+                .baseUrl("http://ec2-54-164-21-210.compute-1.amazonaws.com:8080/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
@@ -207,12 +208,12 @@ public class MarcarConsultaActivity extends AppCompatActivity {
     public void efetuarAgendamento(View view){
         configurarRetrofit();
         ConsultaDto dados = new ConsultaDto();
-        dados.setValor(tratamento.getValor());
+        dados.setValor(1.99);
         dados.setDatahora(dateTimeParaApi);
         dados.setSituacao("Aguardando confirmação");
         dados.setCpf_cliente(cpf);
         dados.setId_servico(idTratamento);
-        dados.setId_clinica(4);
+        dados.setId_clinica(idClinica);
 
         Call<Consulta> agendar = apiCall.marcarConsulta(dados);
         agendar.enqueue(new Callback<Consulta>() {
@@ -220,6 +221,7 @@ public class MarcarConsultaActivity extends AppCompatActivity {
             public void onResponse(Call<Consulta> call, Response<Consulta> response) {
                 if(response.code() == 201)
                     finish();
+                Toast.makeText(MarcarConsultaActivity.this, Integer.toString(response.code()) + " | " + cpf + " | " + idClinica + " | " + idTratamento, Toast.LENGTH_SHORT).show();
             }
 
             @Override
