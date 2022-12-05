@@ -2,6 +2,7 @@ package com.example.tcc.Activitys;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.res.ResourcesCompat;
@@ -10,15 +11,21 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tcc.Dtos.ConsultaDto;
 import com.example.tcc.Interfaces.APICall;
+import com.example.tcc.Interfaces.EnvioEmailFastthoot;
+import com.example.tcc.Models.Cliente;
 import com.example.tcc.Models.Consulta;
 import com.example.tcc.Models.Tratamento;
 import com.example.tcc.R;
@@ -30,6 +37,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -47,7 +55,7 @@ public class MarcarConsultaActivity extends AppCompatActivity {
     private String dateParaApi, timeParaApi, dateTimeParaApi;
     private LocalDate horarioEscolhido = LocalDate.now();
     private Integer idTratamento = 0, idClinica; //pegar o id do tratamento
-    private String cpf, senha;
+    private String cpf, senha, email = null;
     private APICall apiCall;
     private Tratamento tratamento;
 
@@ -119,6 +127,20 @@ public class MarcarConsultaActivity extends AppCompatActivity {
 
             }
         });
+
+        Call<Cliente> call = apiCall.findCliente(cpf,senha);
+        call.enqueue(new Callback<Cliente>() {
+            @Override
+            public void onResponse(Call<Cliente> call, Response<Cliente> response) {
+                if(response.isSuccessful())
+                    email = response.body().getEmail();
+            }
+
+            @Override
+            public void onFailure(Call<Cliente> call, Throwable t) {
+
+            }
+        });
     }
 
     public void configurarEndereco(String unidade){
@@ -143,7 +165,6 @@ public class MarcarConsultaActivity extends AppCompatActivity {
             dateParaApi = dataAgora.format(dateFormat);
         timeParaApi = b.getText().toString();
         dateTimeParaApi = dateParaApi + " " + timeParaApi;
-        Toast.makeText(this, dateTimeParaApi, Toast.LENGTH_SHORT).show();
     }
     private void resetarHoras(){
         binding.hora1.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.borda_black, null));
@@ -179,7 +200,7 @@ public class MarcarConsultaActivity extends AppCompatActivity {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://ec2-54-164-21-210.compute-1.amazonaws.com:8080/")
+                .baseUrl(getString(R.string.urlConexaoApi))
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
@@ -215,19 +236,87 @@ public class MarcarConsultaActivity extends AppCompatActivity {
         dados.setId_servico(idTratamento);
         dados.setId_clinica(idClinica);
 
-        Call<Consulta> agendar = apiCall.marcarConsulta(dados);
-        agendar.enqueue(new Callback<Consulta>() {
-            @Override
-            public void onResponse(Call<Consulta> call, Response<Consulta> response) {
-                if(response.code() == 201)
-                    finish();
-                Toast.makeText(MarcarConsultaActivity.this, Integer.toString(response.code()) + " | " + cpf + " | " + idClinica + " | " + idTratamento, Toast.LENGTH_SHORT).show();
-            }
+        if (timeParaApi != null && email != null) {
+            // Confirmando consulta por email.
+            // Obtendo email do u
+            LayoutInflater inflater = this.getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.popup_email_layou, null);
 
-            @Override
-            public void onFailure(Call<Consulta> call, Throwable t) {
+            final TextView mensagemPopup = (TextView) dialogView.findViewById(R.id.mensagemPopup);
+            final EditText etCodigo = (EditText) dialogView.findViewById(R.id.etCodigo);
+            final Button btnOk = (Button) dialogView.findViewById(R.id.btnOk);
+            final Button btnCancel = (Button) dialogView.findViewById(R.id.btnCancel);
+            AlertDialog.Builder popupCodigoConfirmacao = new AlertDialog.Builder(this);
 
-            }
-        });
+            popupCodigoConfirmacao.setView(dialogView);
+            popupCodigoConfirmacao.setCancelable(false);
+            mensagemPopup.setText(getString(R.string.mensagemPopup) + email);
+            // --------------------
+
+            // gera número no intervalo de 1500 a 5000.
+            int codigo = gerarCodigoConfirmacao(5000, 1500);
+            System.out.println("\n\nCódigo de confirmação: " + codigo);
+
+            String emailTexto = getString(R.string.email_texto) + codigo;
+            EnvioEmailFastthoot mandarEmail = new EnvioEmailFastthoot(getString(R.string.email_assunto), email, emailTexto);
+
+            final AlertDialog show = popupCodigoConfirmacao.show();
+
+            btnOk.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String codigoInserido = etCodigo.getText().toString();
+
+                    // se usuário digitou código incorreto.
+                    if (!codigoInserido.matches(String.valueOf(codigo))) {
+
+                        System.out.println("\nValor incorreto!");
+                        System.out.println("\nvalor inserido: " + codigoInserido + " - Codigo correto: " + String.valueOf(codigo) + "-");
+                        dialogView.findViewById(R.id.tvInvalido).setVisibility(View.VISIBLE);
+                    } else {
+                        System.out.println("\n\nCódigo confirmado!");
+                        Call<Consulta> agendar = apiCall.marcarConsulta(dados);
+                        agendar.enqueue(new Callback<Consulta>() {
+                            @Override
+                            public void onResponse(Call<Consulta> call, Response<Consulta> response) {
+                                if (response.code() == 201) {
+                                    Toast.makeText(getApplicationContext(), "Consulta Marcada com sucesso!", Toast.LENGTH_LONG).show();
+                                    show.dismiss();
+                                    finish();
+                                } else {
+                                    System.out.println("\nResponse: " + response.code());
+                                    System.out.println("\nMessage --> " + response.message());
+                                    System.out.println("\nHeaders --> " + response.headers());
+                                    System.out.println("\nDeu ruim");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Consulta> call, Throwable t) {
+                                Toast.makeText(getApplicationContext(), "Erro ao agendar consulta", Toast.LENGTH_LONG).show();
+                                System.out.println("ERRO! ao cadastrar consulta");
+                                t.printStackTrace();
+                            }
+                        });
+                    }
+                }
+            });
+
+            btnCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    show.dismiss();
+                }
+            });
+        } else {
+            Toast.makeText(getApplicationContext(), "Selecione um horário.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    int gerarCodigoConfirmacao(int maximo, int minimo){
+
+        // Obtendo número aleatório a partir da config. do tempo em milisegundos do sistema.
+        Calendar lCDateTime = Calendar.getInstance();
+        return (int)(lCDateTime.getTimeInMillis() % (maximo - minimo + 1) + minimo);
     }
 }

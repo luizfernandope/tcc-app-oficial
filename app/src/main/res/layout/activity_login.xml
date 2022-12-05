@@ -86,6 +86,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
         <Switch
+            android:id="@+id/switchLogarAutomatico"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Login automatico "
@@ -108,23 +109,23 @@
         android:layout_weight="20"
         android:orientation="vertical"
         android:gravity="center">
+
         <TextView
             android:id="@+id/esqueceuSenha_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="esqueceu sua senha?"
             android:textColor="@color/azul"
-            android:textStyle="bold"
-            android:textSize="16dp" />
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/naoPossuiConta_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Não possui conta? Cadastre-se aqui"
-            android:textStyle="bold"
             android:textSize="16dp"
             android:textColor="@color/black"
-            android:layout_marginTop="60dp"
-            android:onClick="irParaCadastro"/>
+            android:layout_marginTop="60dp"/>
     </LinearLayout>
 </LinearLayout>

@@ -16,6 +16,7 @@ import com.example.tcc.Interfaces.APICall;
 import com.example.tcc.MainActivity;
 import com.example.tcc.Models.Cliente;
 import com.example.tcc.Models.Usuario;
+import com.example.tcc.R;
 import com.example.tcc.Validacoes.ValidacoesCadastro;
 import com.example.tcc.databinding.ActivityCadastro2Binding;
 import com.google.gson.Gson;
@@ -204,7 +205,7 @@ public class Cadastro2Activity extends AppCompatActivity {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://ec2-54-164-21-210.compute-1.amazonaws.com:8080/")
+                .baseUrl(getString(R.string.urlConexaoApi))
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 

@@ -85,6 +85,7 @@
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/horarioMarcadoAtalho"
                     android:layout_width="wrap_content"
                     android:layout_height="100dp"
                     android:backgroundTint="@color/azul"
@@ -111,6 +112,7 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/servicosAtalho"
                     android:layout_width="110dp"
                     android:layout_height="100dp"
                     android:backgroundTint="@color/azul"
@@ -137,6 +139,7 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/verClientesAtalho"
                     android:layout_width="110dp"
                     android:layout_height="100dp"
                     android:backgroundTint="@color/azul"
@@ -163,6 +166,7 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/apurarSaldoAtalho"
                     android:layout_width="110dp"
                     android:layout_height="100dp"
                     android:backgroundTint="@color/azul"
@@ -189,6 +193,7 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/politicasAtalho"
                     android:layout_width="wrap_content"
                     android:layout_height="100dp"
                     android:backgroundTint="@color/azul"
@@ -215,6 +220,7 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/sobreNosAtalho"
                     android:layout_width="110dp"
                     android:layout_height="100dp"
                     android:backgroundTint="@color/azul"

@@ -6,10 +6,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.tcc.Activitys.SobreTratamentoActivity;
@@ -17,7 +19,9 @@ import com.example.tcc.Fragments.AgendaFragment;
 import com.example.tcc.Fragments.InicioFragment;
 import com.example.tcc.Fragments.InicioFuncionarioFragment;
 import com.example.tcc.Fragments.PerfilFragment;
+import com.example.tcc.Fragments.ReceitaFragment;
 import com.example.tcc.Fragments.ServicosFragment;
+import com.example.tcc.Fragments.VerClientesFragment;
 import com.example.tcc.databinding.ActivityMainBinding;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class MainActivity extends AppCompatActivity {
@@ -81,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         binding.bottomNavigation.show(1, false); //iniciar com o fragment de inicio
+
     }
 
 
@@ -89,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment fragment = new InicioFragment();
+
 
         if(cliente){
             if(idTela == 1)
@@ -107,10 +113,10 @@ public class MainActivity extends AppCompatActivity {
                 fragment = new ServicosFragment();
             else if(idTela == 3)
                 fragment = new AgendaFragment();
-//            else if(idTela == 4)
-////                fragment = new PerfilFragment();
-//            else if(idTela == 5)
-//                fragment = new PerfilFragment();
+            else if(idTela == 4)
+                fragment = new ReceitaFragment();
+            else if(idTela == 5)
+                fragment = new VerClientesFragment();
             else if(idTela == 6)
                 fragment = new PerfilFragment();
         }
@@ -118,8 +124,7 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putString("cpf", cpf);
         bundle.putString("senha", senha);
-        if(idTela == 2)
-            bundle.putBoolean("cliente", cliente);
+        bundle.putBoolean("cliente", cliente);
         fragment.setArguments(bundle);
         //iniciando os fragments no frame layout
         fragmentTransaction.replace(binding.frameLayoutTelas.getId(), fragment);

@@ -12,6 +12,22 @@
     <string name="whatssap"><b>Whatssap:</b> (11) 91323-1138</string>
     <string name="email"><b>E-mail:</b> dentistavaleria@gmail.com</string>
 
+    <string name="naoPossuiConta">
+        <![CDATA[
+        Não possui conta?<font color="#1574F6"> Cadastre-se aqui</font>
+        ]]>
+    </string>
+
+    <string name="jaPossuiConta">
+        <![CDATA[
+        Já possui conta?<font color="#1574F6"> Faça login aqui</font>
+        ]]>
+    </string>
+
+    <string name="preference_file_key">com.example.tcc.PREFERENCE_FILE_KEY</string>
+
+    <string name="urlConexaoApi">http://ec2-44-202-153-11.compute-1.amazonaws.com:8080/</string>
+
 
     <string-array name="array_clinicas">
         <item>carapícuiba, pq santa teresa</item>
@@ -30,5 +46,10 @@
         <item>lentes</item>
         <item>facetas</item>
     </string-array>
+
+    <string name="email_assunto">Código de verificação - Agendamento de consulta [FastTooth]</string>
+    <string name="email_texto">código de verificação: </string>
+    <string name="mensagemPopup">Código de verificação enviado para email:</string>
+    <string name="email_assunto_trocarSenha">Código de verificação - Troca de Senha [FastTooth]</string>
 
 </resources>

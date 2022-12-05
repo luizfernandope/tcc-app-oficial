@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.example.tcc.Interfaces.APICall;
 import com.example.tcc.Models.Consulta;
 import com.example.tcc.Models.Tratamento;
+import com.example.tcc.R;
 import com.example.tcc.databinding.ActivitySobreConsultaBinding;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -47,7 +48,7 @@ public class SobreConsultaActivity extends AppCompatActivity {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://ec2-54-164-21-210.compute-1.amazonaws.com:8080/")
+                .baseUrl(getString(R.string.urlConexaoApi))
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 

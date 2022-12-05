@@ -1,23 +1,38 @@
 package com.example.tcc.Fragments;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tcc.Activitys.LoginActivity;
 import com.example.tcc.Interfaces.APICall;
+import com.example.tcc.Interfaces.EnvioEmailFastthoot;
 import com.example.tcc.Models.Cliente;
 import com.example.tcc.Models.Funcionario;
+import com.example.tcc.Models.Usuario;
 import com.example.tcc.R;
+import com.example.tcc.Validacoes.ValidacoesCadastro;
 import com.example.tcc.databinding.FragmentPerfilBinding;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.util.Calendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,16 +40,17 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class PerfilFragment extends Fragment {
 
     private FragmentPerfilBinding binding;
     private APICall apiCall;
 
-    private String cpf, senha;
+    private String cpf, senha, email;
     private Cliente cliente;
     private Funcionario funcionario;
     boolean ehFuncionario = false;
+    String novaSenha = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,6 +68,13 @@ public class PerfilFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        binding.btnMudarSenha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mudarSenha();
+            }
+        });
 
         if(cliente == null)
             carregarCliente();
@@ -82,6 +105,13 @@ public class PerfilFragment extends Fragment {
                 }
             }
         });
+
+        binding.btnDeslogar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deslogar();
+            }
+        });
     }
 
     public void carregarCliente(){
@@ -98,6 +128,7 @@ public class PerfilFragment extends Fragment {
                     binding.sexoEditTextPerfil.setText(response.body().getSexo());
                     binding.emailEditTextPerfil.setText(response.body().getEmail());
                     cliente = response.body();
+                    email = response.body().getEmail();
                 }
                 else{
                     ehFuncionario = true;
@@ -142,7 +173,7 @@ public class PerfilFragment extends Fragment {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://ec2-54-164-21-210.compute-1.amazonaws.com:8080/")
+                .baseUrl(getString(R.string.urlConexaoApi))
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
@@ -205,6 +236,172 @@ public class PerfilFragment extends Fragment {
                 }
             });
         }
+    }
 
+
+    public void deslogar(){
+        Intent intent = new Intent(getContext(), LoginActivity.class);
+        startActivity(intent);
+
+        //Tirando o loginAutomatico
+        SharedPreferences sharedPref = getActivity().getSharedPreferences(
+                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("cpf", null);
+        editor.putString("senha", null);
+        editor.putBoolean("cliente", true);
+        editor.apply();
+        getActivity().finish();
+    }
+
+    void mudarSenha(){
+
+        // Mudando senha por email.
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogConfirmar = inflater.inflate(R.layout.confirma_mudar_senha, null);
+
+        final Button btnSim = (Button) dialogConfirmar.findViewById(R.id.btnSim);
+        final Button btnNao = (Button) dialogConfirmar.findViewById(R.id.btnNao);
+        final TextView tvMensagem = (TextView) dialogConfirmar.findViewById(R.id.tvMensagem);
+
+        AlertDialog.Builder popupConfirmaMudarSenha = new AlertDialog.Builder(getContext());
+
+        popupConfirmaMudarSenha.setView(dialogConfirmar);
+        popupConfirmaMudarSenha.setCancelable(false);
+        tvMensagem.setText("Deseja realmente alterar sua senha?");
+
+        final AlertDialog showConfSenha = popupConfirmaMudarSenha.show();
+
+        btnNao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showConfSenha.dismiss();
+            }
+        });
+
+        btnSim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showConfSenha.dismiss();
+                View dialogView = inflater.inflate(R.layout.popup_email_layou, null);
+
+                final TextView mensagemPopup = (TextView) dialogView.findViewById(R.id.mensagemPopup);
+                final EditText etCodigo =  (EditText) dialogView.findViewById(R.id.etCodigo);
+                final Button btnOk = (Button) dialogView.findViewById(R.id.btnOk);
+                final Button btnCancel = (Button) dialogView.findViewById(R.id.btnCancel);
+                AlertDialog.Builder popupCodigoConfirmacao = new AlertDialog.Builder(getContext());
+
+                popupCodigoConfirmacao.setView(dialogView);
+                popupCodigoConfirmacao.setCancelable(false);
+                mensagemPopup.setText(getString(R.string.mensagemPopup) + email);
+                // --------------------
+
+                // gera número no intervalo de 1500 a 5000.
+                int codigo = gerarCodigoConfirmacao(5000, 1500);
+                System.out.println("\n\nCódigo de confirmação: " + codigo);
+
+                String emailTexto = getString(R.string.email_texto) + codigo;
+
+                EnvioEmailFastthoot envioEmail = new EnvioEmailFastthoot(getString(R.string.email_assunto_trocarSenha), email, emailTexto);
+                final AlertDialog showPopupCodigo = popupCodigoConfirmacao.show();
+
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showPopupCodigo.dismiss();
+                    }
+                });
+
+                btnOk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String codigoInserido = etCodigo.getText().toString();
+
+                        // se usuário digitou código incorreto.
+                        if (!codigoInserido.matches(String.valueOf(codigo))){
+
+                            System.out.println("\nValor incorreto!");
+                            System.out.println("\nvalor inserido: " + codigoInserido + " - Codigo correto: " + String.valueOf(codigo) + "-");
+                            dialogView.findViewById(R.id.tvInvalido).setVisibility(View.VISIBLE);
+                        } else {
+                            System.out.println("\n\nCódigo confirmado!");
+
+                            showPopupCodigo.dismiss();
+                            View dialogNovaSenha = inflater.inflate(R.layout.popup_novasenha, null);
+                            AlertDialog.Builder popupNovaSenha = new AlertDialog.Builder(getContext());
+
+                            EditText tvNovaSenha = (EditText) dialogNovaSenha.findViewById(R.id.etNovaSenha);
+                            TextView tvErro = (TextView) dialogNovaSenha.findViewById(R.id.tvErroSenha);
+                            Button btnAlterarSenha = dialogNovaSenha.findViewById(R.id.btnPronto);
+                            Button btnCancelarAlteramento = dialogNovaSenha.findViewById(R.id.btnCancelarUpdate);
+                            popupNovaSenha.setView(dialogNovaSenha);
+
+
+                            final AlertDialog show = popupNovaSenha.show();
+
+                            btnCancelarAlteramento.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    show.dismiss();
+                                }
+                            });
+                            btnAlterarSenha.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    ValidacoesCadastro validacoesCadastro = new ValidacoesCadastro();
+                                    // Operador ternario (se senha é válida --> variavel true. senão variavel false).
+
+                                    novaSenha = tvNovaSenha.getText().toString();
+                                    boolean senhaEhValida = validacoesCadastro.validarSenha(novaSenha) == null? true: false;
+
+                                    if (senhaEhValida){
+                                        //Toast.makeText(getContext(), "", Toast.LENGTH_SHORT).show();
+                                        configurarRetrofit();
+                                        Usuario user = new Usuario();
+
+                                        user.setSenha(novaSenha);
+                                        user.setCpf(cpf);
+                                        Call<Usuario> usuarioCall = apiCall.atualizarSenhaUsuario(user);
+                                        usuarioCall.enqueue(new Callback<Usuario>() {
+                                            @RequiresApi(api = Build.VERSION_CODES.O)
+                                            @Override
+                                            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                                                if (response.isSuccessful()){
+                                                    Toast.makeText(getContext(), "Senha atualizada com sucesso!.", Toast.LENGTH_SHORT).show();
+
+                                                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                                                    startActivity(intent);
+                                                    getActivity().finish();
+                                                    show.dismiss();
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<Usuario> call, Throwable t) {
+                                                Toast.makeText(getContext(), "Erro ao atualizar senha.", Toast.LENGTH_SHORT).show();
+                                                t.printStackTrace();
+                                            }
+                                        });
+                                    } else{
+                                        tvErro.setVisibility(View.VISIBLE);
+                                        tvErro.setText(validacoesCadastro.validarSenha(novaSenha));
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    int gerarCodigoConfirmacao(int maximo, int minimo){
+
+        // Obtendo número aleatório a partir da config. do tempo em milisegundos do sistema.
+        Calendar lCDateTime = Calendar.getInstance();
+        return (int)(lCDateTime.getTimeInMillis() % (maximo - minimo + 1) + minimo);
     }
 }

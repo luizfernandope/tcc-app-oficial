@@ -1,6 +1,5 @@
 package com.example.tcc.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,14 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
-import com.example.tcc.Adapters.ConsultaAdapter;
+import com.example.tcc.Adapters.GastoClienteAdapter;
 import com.example.tcc.Interfaces.APICall;
-import com.example.tcc.Models.Consulta;
+import com.example.tcc.Models.Cliente;
 import com.example.tcc.R;
-import com.example.tcc.databinding.FragmentAgendaBinding;
+import com.example.tcc.databinding.FragmentVerClientesBinding;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -33,25 +30,26 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class AgendaFragment extends Fragment {
+public class VerClientesFragment extends Fragment {
 
-   private FragmentAgendaBinding binding;
+    private FragmentVerClientesBinding binding;
     private APICall apiCall;
-    private ConsultaAdapter adapter;
-    ArrayList<Consulta> consultas;
     RecyclerView recyclerView;
+    GastoClienteAdapter adapter;
+    ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+    ArrayList<Double> gastoClientes = new ArrayList<Double>();
     private String cpf, senha;
-    private Boolean cliente;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentAgendaBinding.inflate(inflater, container, false);
-        //pegando o usuario e senha da activity main
+        binding = FragmentVerClientesBinding.inflate(inflater, container, false);
+
         Bundle bundle = getArguments();
         cpf = bundle.getString("cpf");
         senha = bundle.getString("senha");
-        cliente = bundle.getBoolean("cliente", true);
+        recyclerView = binding.recyclerViewClientes;
+
         return binding.getRoot();
     }
 
@@ -59,27 +57,23 @@ public class AgendaFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        consultas = new ArrayList<Consulta>();
         configurarRetrofit();
-        if(!cliente)
-            binding.tituloPagina.setText("horarios marcados");
-        Call<List<Consulta>> chamadaApi = apiCall.consultasCliente(cpf, senha);
-
-        chamadaApi.enqueue(new Callback<List<Consulta>>() {
+        Call<List<Cliente>> call = apiCall.todosClientes(cpf, senha);
+        call.enqueue(new Callback<List<Cliente>>() {
             @Override
-            public void onResponse(Call<List<Consulta>> call, Response<List<Consulta>> response) {
-                for(int i=0; i<response.body().size(); i++){
-                    consultas.add(response.body().get(i));
+            public void onResponse(Call<List<Cliente>> call, Response<List<Cliente>> response) {
+                if(response.isSuccessful()) {
+                    for (int i = 0; i < response.body().size(); i++) {
+                        clientes.add(response.body().get(i));
+                    }
+                    binding.numClientes.setText(Integer.toString(response.body().size()));
+                    inicializarListagem();
                 }
-                //depois de carregar o array de tratamentos
-                inicializarListagem();
             }
 
             @Override
-            public void onFailure(Call<List<Consulta>> call, Throwable t) {
-                Toast.makeText(binding.getRoot().getContext(), "erro ao requisitar suas consultas | "+t.getMessage(), Toast.LENGTH_SHORT).show();
-                System.out.println("\n\n\n"+"mensagem: "+t.getMessage());
-                System.out.println("\n\n\n"+"erro: "+t.getLocalizedMessage());
+            public void onFailure(Call<List<Cliente>> call, Throwable t) {
+
             }
         });
     }
@@ -101,12 +95,12 @@ public class AgendaFragment extends Fragment {
     }
 
     void inicializarListagem(){
-        recyclerView = binding.recyclerViewAgenda;
+//
+//        System.out.println("\n\n\n\n\n\nteste\n"+(cpfsClie.get(1)));
         recyclerView.setHasFixedSize(true);//da mais desempenho na listagem
-        adapter = new ConsultaAdapter(binding.getRoot().getContext(), consultas, cpf, senha);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(binding.getRoot().getContext(), LinearLayoutManager.VERTICAL, false);
+        adapter = new GastoClienteAdapter(getContext(), clientes, gastoClientes);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-
     }
 }

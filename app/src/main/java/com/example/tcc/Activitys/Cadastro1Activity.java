@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.tcc.Interfaces.APICall;
+import com.example.tcc.R;
 import com.example.tcc.Validacoes.ValidacoesCadastro;
 import com.example.tcc.databinding.ActivityCadastro1Binding;
 import com.google.gson.Gson;
@@ -41,6 +43,14 @@ public class Cadastro1Activity extends AppCompatActivity {
                     cpfExiste();
                 else
                     binding.etMaskCPFCadastro1.setError("CPF inválido!");
+            }
+        });
+
+        binding.jaPossuiConta.setText(Html.fromHtml(getString(R.string.jaPossuiConta)));
+        binding.jaPossuiConta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
             }
         });
     }
@@ -79,7 +89,7 @@ public class Cadastro1Activity extends AppCompatActivity {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://ec2-54-164-21-210.compute-1.amazonaws.com:8080/")
+                .baseUrl(getString(R.string.urlConexaoApi))
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 

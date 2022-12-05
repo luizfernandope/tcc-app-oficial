@@ -30,7 +30,7 @@ public interface APICall {
     Call<List<Tratamento>> listarTratamentos();
 
     @GET("consultas/listar/{cpf}/{senha}")
-    Call<List<Consulta>> consultasCliente(@Path("cpf") String cpf, @Path("senha") String senha);
+    Call<List<Consulta>> consultasCliente(@Path("cpf") String cpf, @Path("senha") String senha); // esse para numero de consultas
 
     @GET("consultas/{id}/{cpf}/{senha}")
     Call<Consulta> pegarConsulta(@Path("id") Integer id, @Path("cpf") String cpf, @Path("senha") String senha);
@@ -38,11 +38,23 @@ public interface APICall {
     @POST("consultas")
     Call<Consulta> marcarConsulta(@Body ConsultaDto consulta);
 
+    @GET("consultas/saldo/{cpf}/{senha}")
+    Call<Double> saldoTotal(@Path("cpf") String cpf, @Path("senha") String senha);
+
+    @GET("consultas/mediaConsulta/{cpf}/{senha}")
+    Call<Double> valorMedioPorConsulta(@Path("cpf") String cpf, @Path("senha") String senha);
+
+    @GET("consultas/gastoClientes/{cpf}/{senha}")
+    Call<List<String>> gastoPorCliente(@Path("cpf") String cpf, @Path("senha") String senha);
+
     @GET("usuario/login/{cpf}/{senha}")
     Call<Usuario> login(@Path("cpf") String cpf, @Path("senha") String senha);
 
     @GET("usuario/existe/{cpf}")
     Call<String> existeUsuarioByCPF(@Path("cpf") String cpf);
+
+    @PUT("usuario/mudarSenha")
+    Call<Usuario> atualizarSenhaUsuario(@Body Usuario usuario);
 
     @POST("usuario")
     Call<Usuario> cadastrarUsuario(@Body Usuario usuario);
@@ -52,6 +64,12 @@ public interface APICall {
 
     @GET("clientes/findCliente/{cpf}/{senha}")
     Call<Cliente> findCliente(@Path("cpf") String cpf, @Path("senha") String senha);
+
+    @GET("clientes/listar/{cpf}/{senha}")
+    Call<List<Cliente>> todosClientes(@Path("cpf") String cpf, @Path("senha") String senha);
+
+    @GET("clientes/find/{cpfclie}/{cpf}/{senha}")
+    Call<Cliente> findClienteByCpfCliente(@Path("cpfclie") String cpfclie,@Path("cpf") String cpf, @Path("senha") String senha);
 
     @PUT("clientes/atualizarCliente")
     Call<Cliente> atualizarCliente(@Body Cliente cliente);
