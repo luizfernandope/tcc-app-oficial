@@ -1,15 +1,21 @@
 package com.example.tcc.Activitys;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
+import android.text.method.ScrollingMovementMethod;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tcc.Interfaces.APICall;
@@ -171,6 +177,61 @@ public class Cadastro2Activity extends AppCompatActivity {
                 }
                 else
                     Toast.makeText(Cadastro2Activity.this, "termos", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        binding.tvRedirectToTermos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // Abrir alertDialog com termos.
+                LayoutInflater inflater = getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.layout_termos, null);
+
+                AlertDialog.Builder alertTermos = new AlertDialog.Builder(Cadastro2Activity.this);
+
+                alertTermos.setView(dialogView);
+
+                TextView tvTextoAtual =  dialogView.findViewById(R.id.tvTextoAtual);
+                Button btnFecharTermos = dialogView.findViewById(R.id.btnFecharTermos);
+                Button btnTabTermos = dialogView.findViewById(R.id.btnTabTermos);
+                Button btnTabPolitica = dialogView.findViewById(R.id.btnTabPolitica);
+
+
+                tvTextoAtual.setText(Html.fromHtml(getString(R.string.termos_uso)));
+
+
+                btnTabTermos.setBackgroundTintList(getResources().getColorStateList(R.color.azul));
+                btnTabPolitica.setBackgroundTintList(getResources().getColorStateList(R.color.white));
+
+                btnTabTermos.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        tvTextoAtual.setText(Html.fromHtml(getString(R.string.termos_uso)));
+                        btnTabTermos.setBackgroundTintList(getResources().getColorStateList(R.color.azul));
+                        btnTabPolitica.setBackgroundTintList(getResources().getColorStateList(R.color.white));
+                    }
+                });
+
+                btnTabPolitica.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        tvTextoAtual.setText(Html.fromHtml(getString(R.string.politica_privacidade)));
+                        btnTabTermos.setBackgroundTintList(getResources().getColorStateList(R.color.white));
+                        btnTabPolitica.setBackgroundTintList(getResources().getColorStateList(R.color.azul));
+                    }
+                });
+
+                // Habilita o texto a ser 'Scrollável'.
+                tvTextoAtual.setMovementMethod(new ScrollingMovementMethod());
+                final AlertDialog show = alertTermos.show();
+
+                btnFecharTermos.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        show.dismiss();
+                    }
+                });
             }
         });
     }

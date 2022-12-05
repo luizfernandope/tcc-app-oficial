@@ -244,6 +244,7 @@
             android:layout_marginBottom="15dp"/>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnTermosPoliticas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
@@ -259,6 +260,7 @@
             android:layout_marginBottom="10dp"/>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAjuda"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
@@ -277,18 +279,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sair"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:drawableStart="@drawable/ic_logout"
-            android:background="@drawable/borda_black"
+            android:background="@drawable/borda_black_fill_blue"
+            android:drawableTint="@color/white"
             android:padding="10dp"
-            android:backgroundTint="@color/azul_fraco"
             android:layout_gravity="center"
             android:layout_marginTop="30dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Versão 1.0.2"
+            android:text="Versão 1.1.1"
             android:textColor="@color/black"
             android:textSize="18dp"
             android:layout_gravity="center"

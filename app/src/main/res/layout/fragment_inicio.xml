@@ -421,7 +421,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="(684) 555-0102"
+                        android:text="@string/whatssapVilaMaria"
                         android:drawableStart="@drawable/ic_whatss"
                         android:drawablePadding="6dp"
                         android:textColor="@color/black"
@@ -430,7 +430,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="(684) 555-0102"
+                        android:text="@string/telefoneVilaMaria"
                         android:drawableStart="@drawable/ic_telefone"
                         android:drawablePadding="6dp"
                         android:textColor="@color/black"
@@ -474,7 +474,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="(684) 555-0102"
+                        android:text="@string/whatssapCarapicuiba"
                         android:drawableStart="@drawable/ic_whatss"
                         android:drawablePadding="6dp"
                         android:textColor="@color/black"
@@ -483,7 +483,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="(684) 555-0102"
+                        android:text="@string/telefoneCarapicuiba"
                         android:drawableStart="@drawable/ic_telefone"
                         android:drawablePadding="6dp"
                         android:textColor="@color/black"

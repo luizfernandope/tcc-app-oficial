@@ -167,6 +167,17 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/tvRedirectToTermos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="Ler termos de uso e política de privacidade "
+            android:textColor="@color/azul"
+            android:textSize="16sp" />
+
         <CheckBox
             android:id="@+id/checkBoxTermos_cadastro2"
             android:layout_width="match_parent"

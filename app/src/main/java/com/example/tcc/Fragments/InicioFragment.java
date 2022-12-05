@@ -6,13 +6,18 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.Html;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.tcc.Adapters.CarroselFotosAdapter;
@@ -67,6 +72,27 @@ public class InicioFragment extends Fragment {
                 trocarTela(2);
             }
         });
+
+        binding.perguntasAtalho.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                abrirTelaPerguntas();
+            }
+        });
+
+        binding.politicasAtalho.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                abrirTelaPolitica();
+            }
+        });
+
+        binding.sobreNosAtalho.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                abrirTelaSobre();
+            }
+        });
     }
 
 
@@ -92,4 +118,104 @@ public class InicioFragment extends Fragment {
         }
     }
 
+    public void abrirTelaPerguntas(){
+        // Abrir alertDialog com perguntas.
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.layout_perguntas_frequentes, null);
+
+        AlertDialog.Builder alertTermos = new AlertDialog.Builder(getContext());
+
+        alertTermos.setView(dialogView);
+        TextView tvPerguntas =  dialogView.findViewById(R.id.tvPerguntas);
+        Button btnFecharPerguntas = dialogView.findViewById(R.id.btnFecharPerguntas);
+
+        tvPerguntas.setText(Html.fromHtml(getString(R.string.perguntas_frequentes)));
+
+        // Habilita o texto a ser 'Scrollável'.
+        tvPerguntas.setMovementMethod(new ScrollingMovementMethod());
+        final AlertDialog show = alertTermos.show();
+
+        btnFecharPerguntas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                show.dismiss();
+            }
+        });
+    }
+
+    public void abrirTelaPolitica(){
+        // Abrir alertDialog com termos.
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.layout_termos, null);
+
+        AlertDialog.Builder alertTermos = new AlertDialog.Builder(getContext());
+
+        alertTermos.setView(dialogView);
+
+        TextView tvTextoAtual =  dialogView.findViewById(R.id.tvTextoAtual);
+        Button btnFecharTermos = dialogView.findViewById(R.id.btnFecharTermos);
+        Button btnTabTermos = dialogView.findViewById(R.id.btnTabTermos);
+        Button btnTabPolitica = dialogView.findViewById(R.id.btnTabPolitica);
+
+
+        tvTextoAtual.setText(Html.fromHtml(getString(R.string.termos_uso)));
+
+
+        btnTabTermos.setBackgroundTintList(getResources().getColorStateList(R.color.azul));
+        btnTabPolitica.setBackgroundTintList(getResources().getColorStateList(R.color.white));
+
+        btnTabTermos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tvTextoAtual.setText(Html.fromHtml(getString(R.string.termos_uso)));
+                btnTabTermos.setBackgroundTintList(getResources().getColorStateList(R.color.azul));
+                btnTabPolitica.setBackgroundTintList(getResources().getColorStateList(R.color.white));
+            }
+        });
+
+        btnTabPolitica.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tvTextoAtual.setText(Html.fromHtml(getString(R.string.politica_privacidade)));
+                btnTabTermos.setBackgroundTintList(getResources().getColorStateList(R.color.white));
+                btnTabPolitica.setBackgroundTintList(getResources().getColorStateList(R.color.azul));
+            }
+        });
+
+        // Habilita o texto a ser 'Scrollável'.
+        tvTextoAtual.setMovementMethod(new ScrollingMovementMethod());
+        final AlertDialog show = alertTermos.show();
+
+        btnFecharTermos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                show.dismiss();
+            }
+        });
+    }
+
+    public void abrirTelaSobre(){
+        // Abrir alertDialog com perguntas.
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.layout_perguntas_frequentes, null);
+
+        AlertDialog.Builder alertTermos = new AlertDialog.Builder(getContext());
+
+        alertTermos.setView(dialogView);
+        TextView tvPerguntas =  dialogView.findViewById(R.id.tvPerguntas);
+        Button btnFecharPerguntas = dialogView.findViewById(R.id.btnFecharPerguntas);
+
+        tvPerguntas.setText(Html.fromHtml(getString(R.string.sobre_nos)));
+
+        // Habilita o texto a ser 'Scrollável'.
+        tvPerguntas.setMovementMethod(new ScrollingMovementMethod());
+        final AlertDialog show = alertTermos.show();
+
+        btnFecharPerguntas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                show.dismiss();
+            }
+        });
+    }
 }

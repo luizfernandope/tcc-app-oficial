@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
@@ -25,6 +27,7 @@ import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,6 +45,8 @@ public class AgendaFragment extends Fragment {
     RecyclerView recyclerView;
     private String cpf, senha;
     private Boolean cliente;
+    LinearLayout layoutBtnFiltros;
+    int sizeListaDeBotoesFiltro, btnFiltroAtual;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,6 +57,7 @@ public class AgendaFragment extends Fragment {
         cpf = bundle.getString("cpf");
         senha = bundle.getString("senha");
         cliente = bundle.getBoolean("cliente", true);
+        layoutBtnFiltros = binding.layoutBtnFiltros;
         return binding.getRoot();
     }
 
@@ -82,6 +88,73 @@ public class AgendaFragment extends Fragment {
                 System.out.println("\n\n\n"+"erro: "+t.getLocalizedMessage());
             }
         });
+
+        // pega todos os botões de filtro que estão dentro do linearLayout.
+        List<View> listaDeBotoesFiltro =  layoutBtnFiltros.getTouchables();
+
+        String filtro = ((Button) listaDeBotoesFiltro.get(0)).getText().toString();
+        sizeListaDeBotoesFiltro = listaDeBotoesFiltro.size();
+
+        // Click Listener dos botões de filtro.
+        for (int i = 0; i < sizeListaDeBotoesFiltro; i++){
+            listaDeBotoesFiltro.get(i).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    // Loop para obter qual é o índice do botão clicado dentro da lista de botões (listaDeBotoesFiltro).
+                    // Precisamos do índice do btn Clicado para posteriormente percorrer o array e desabilitar as cores de todos os outros q n foram clicado.
+                    for (int i = 0; i < sizeListaDeBotoesFiltro; i++){
+                        System.out.println("Clicado ID --> " + view.getId() + "Posição ID --> " + listaDeBotoesFiltro.get(i).getId());
+                        // Se o btn clicado for o botao equivalente na lista de botoes.
+                        if(((Button) view) == ((Button) listaDeBotoesFiltro.get(i))) {
+                            System.out.println("\nI -->" + i);
+                            btnFiltroAtual = i;
+                        }
+                    }
+
+                    adapter.notifyDataSetChanged();
+                    String filtro = ((Button) view).getText().toString().toLowerCase(Locale.ROOT);
+                    if(filtro.matches("aguardando confirmação")){
+                        filtro = "Aguardando confirmação";
+                    }
+
+                    System.out.println("\n\nFiltro --> " + filtro);
+                    ArrayList<Consulta> consultasFiltrados = new ArrayList<>();
+                    for(Consulta c: consultas){
+                        if(filtro.matches("todos")){
+                            consultasFiltrados.add(c);
+                        }else if(c.getSituacao().matches(filtro)){
+                            System.out.println("\n\nFiltragem de tipos.");
+                            consultasFiltrados.add(c);
+                        }
+                    }
+
+                    if (consultasFiltrados.isEmpty()) {
+                        Toast.makeText(binding.getRoot().getContext(), "Busca sem resultados", Toast.LENGTH_SHORT).show();
+                        //exibe nenhum item
+                        adapter = new ConsultaAdapter(getContext(), consultasFiltrados, cpf, senha);
+                        recyclerView.setAdapter(adapter);
+                    }
+                    else{
+                        //exibe os itens
+                        adapter = new ConsultaAdapter(getContext(), consultasFiltrados, cpf, senha);
+                        recyclerView.setAdapter(adapter);
+                    }
+
+                    // Alterando cores de botao, de acordo se ele foi clicado ou não.
+                    for (int j = 0; j < sizeListaDeBotoesFiltro; j++){
+                        System.out.println("J --> " + j + " - Atual --> " + btnFiltroAtual);
+                        if (j != btnFiltroAtual){
+                            listaDeBotoesFiltro.get(j).setBackgroundTintList(getContext().getResources().getColorStateList(R.color.white));
+                            ((Button)listaDeBotoesFiltro.get(j)).setTextColor(getContext().getResources().getColorStateList(R.color.black));
+                        } else{
+                            ((Button) view).setBackgroundTintList(getContext().getResources().getColorStateList(R.color.azul));
+                            ((Button) view).setTextColor(getContext().getResources().getColorStateList(R.color.white));
+                        }
+                    }
+                }
+            });
+        }
     }
 
     void configurarRetrofit(){
