@@ -1,7 +1,11 @@
 package com.example.tcc.Activitys;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -19,13 +23,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class SobreConsultaActivity extends AppCompatActivity {
 
     private ActivitySobreConsultaBinding binding;
     private Integer idConsulta = 0;
     String cpf, senha;
     APICall apiCall;
+    Integer idTratamento;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,17 @@ public class SobreConsultaActivity extends AppCompatActivity {
 
         formatarTextos();
 
+        binding.btnSobreConsulta.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SobreConsultaActivity.this, SobreTratamentoActivity.class);
+                intent.putExtra("idTratamento", idTratamento);
+                intent.putExtra("cpf", cpf);
+                intent.putExtra("senha", senha);
+                startActivity(intent);
+            }
+        });
     }
 
     void configurarRetrofit(){
@@ -66,9 +82,26 @@ public class SobreConsultaActivity extends AppCompatActivity {
                     String endereco = response.body().getClinica().getRua() + ", " + response.body().getClinica().getNumero() + " - " + response.body().getClinica().getBairro();
                     binding.tvEndereco.setText(endereco);
                     binding.tvData.setText(response.body().getDatahora());
+                    if(response.body().getSituacao()=="aguardando confirmação");
+                        binding.tvSituacao.setTextColor(Color.parseColor("#eead2d"));
+                    if(response.body().getSituacao()=="pendentes")
+                        binding.tvSituacao.setTextColor(Color.DKGRAY);
+                    if(response.body().getSituacao()=="realizadas")
+                        binding.tvSituacao.setTextColor(Color.GREEN);
+                    if(response.body().getSituacao()=="canceladas")
+                        binding.tvSituacao.setTextColor(Color.RED);
+                    if(response.body().getSituacao()=="finalizado")
+                        binding.tvSituacao.setTextColor(Color.GREEN);
+
                     binding.tvSituacao.setText(response.body().getSituacao());
-                    binding.tvValor.setText(response.body().getValor().toString());
-                    binding.tvSessoes.setText(response.body().getId().toString() + " de " + response.body().getId() + " sessões");
+                    binding.nomeTratameno.setText(response.body().getServico().getNome());
+                    String valorFormatado = String.format("%.2f", response.body().getValor());
+                    binding.tvValor.setText("R$ "+ valorFormatado);
+                    binding.tvSessoes.setText(response.body().getSessaoAtual() + " de " + response.body().getServico().getSessoes() + " sessões");
+                    binding.telefone.setText(binding.telefone.getText() + response.body().getClinica().getTelefone());
+                    binding.whatssap.setText(binding.whatssap.getText() + response.body().getClinica().getWhatsapp());
+
+                    idTratamento = response.body().getServico().getId();
                 }
             }
 

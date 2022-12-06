@@ -8,6 +8,7 @@ import com.example.tcc.Models.Tratamento;
 import com.example.tcc.Models.Usuario;
 
 import java.util.List;
+import java.util.Optional;
 
 import kotlin.ParameterName;
 import okhttp3.RequestBody;
@@ -20,6 +21,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryName;
 
 public interface APICall {
 
@@ -83,4 +85,12 @@ public interface APICall {
     @GET("servico/{id}")
     Call<Tratamento> findTratameto(@Path("id") Integer idTratamento);
 
+    @GET("clientes/{cpf}/{email}/{phone}")
+    Call<Cliente> findByCpfEmailAndTelefone(@Path(value = "cpf") String cpf, @Path(value = "email") String email,@Path(value = "phone") String phone);
+
+    @PUT("servico/atualizarServico/{id}/{cpf}/{senha}")
+    Call<Tratamento> atualizarTratamento(@Path("id") Integer id, @Path("cpf") String cpf, @Path("senha") String senha,@Body Tratamento servico);
+
+    @POST("servico/{cpf}/{senha}")
+    Call<Optional<Tratamento>> cadastrarTratamento(@Path("cpf") String cpf, @Path("senha") String senha, @Body Tratamento servico);
 }

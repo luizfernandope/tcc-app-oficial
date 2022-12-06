@@ -48,9 +48,10 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/nomeTratameno"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="implante dentario"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="28dp"
                 android:textStyle="bold"
@@ -366,15 +367,17 @@
                 android:gravity="center"
                 android:layout_marginTop="30dp"
                 android:paddingBottom="40dp">
+
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnSobreConsulta"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
                     android:layout_weight="50"
+                    android:background="@drawable/borda_black"
                     android:text="sobre consulta"
                     android:textColor="@color/black"
-                    android:textSize="16dp"
-                    android:background="@drawable/borda_black"
-                    android:layout_marginEnd="15dp"/>
+                    android:textSize="16dp" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="0dp"

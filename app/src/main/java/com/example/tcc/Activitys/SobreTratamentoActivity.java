@@ -16,6 +16,8 @@ import com.example.tcc.databinding.ActivitySobreTratamentoBinding;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.text.DecimalFormat;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -72,12 +74,14 @@ public class SobreTratamentoActivity extends AppCompatActivity {
                 if(response.code() == 200)
                 {
                     tratamento = response.body();
+                    binding.nomeTratameno.setText(response.body().getNome());
                     binding.tvDescricaoTratamento.setText(response.body().getDescricao());
                     binding.tvDuracaoTratamento.setText(response.body().getTempo() + " Hora(s).");
-                    binding.tvPqFazerTratamento.setText(response.body().getDescricao());
+                    binding.tvPqFazerTratamento.setText(response.body().getPqFazer());
                     binding.tvTipoTratamento.setText(response.body().getTipo());
-                    binding.tvSessoesTratamento.setText(response.body().getId().toString() + " sessões");
-                    binding.tvValorTratamento.setText("R$ " + response.body().getValor().toString());
+                    binding.tvSessoesTratamento.setText(response.body().getSessoes().toString() + " sessões");
+                    String valorFormatado = String.format("%.2f", response.body().getValor());
+                    binding.tvValorTratamento.setText("R$ " + valorFormatado);
                 }
             }
             @Override

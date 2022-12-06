@@ -9,6 +9,8 @@ public class Clinica {
     private String bairro;
     private String numero;
     private String rua;
+    private String telefone;
+    private String whatsapp;
 
     public Integer getId() {
         return id;
@@ -64,5 +66,21 @@ public class Clinica {
 
     public void setRua(String rua) {
         this.rua = rua;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getWhatsapp() {
+        return whatsapp;
+    }
+
+    public void setWhatsapp(String whatsapp) {
+        this.whatsapp = whatsapp;
     }
 }

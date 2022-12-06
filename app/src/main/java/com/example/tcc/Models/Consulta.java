@@ -10,6 +10,7 @@ public class Consulta {
 
     private String situacao;
 
+    private Integer sessaoAtual;
 
     private Cliente cliente;
 
@@ -72,5 +73,13 @@ public class Consulta {
 
     public void setClinica(Clinica clinica) {
         this.clinica = clinica;
+    }
+
+    public Integer getSessaoAtual() {
+        return sessaoAtual;
+    }
+
+    public void setSessaoAtual(Integer sessaoAtual) {
+        this.sessaoAtual = sessaoAtual;
     }
 }

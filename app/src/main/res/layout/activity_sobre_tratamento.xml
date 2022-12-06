@@ -48,9 +48,10 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/nomeTratameno"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="implante dentario"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="28dp"
                 android:textStyle="bold"
@@ -70,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
-            android:text="@string/horario"
+            android:text="..."
             android:textSize="16dp"
             android:textColor="@color/black"/>
 
@@ -103,7 +104,7 @@
                         android:id="@+id/tvDuracaoTratamento"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="30:00 minutos"
+                        android:text="..."
                         android:textColor="@color/black"
                         android:textSize="18dp"/>
 
@@ -111,7 +112,7 @@
                         android:id="@+id/tvSessoesTratamento"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1 sessão"
+                        android:text="..."
                         android:textColor="@color/black"
                         android:textSize="18dp"/>
                 </LinearLayout>
@@ -134,7 +135,7 @@
                         android:id="@+id/tvTipoTratamento"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="30:00 minutos"
+                        android:text="..."
                         android:textColor="@color/black"
                         android:textSize="18dp"/>
                 </LinearLayout>
@@ -194,13 +195,13 @@
                         android:textColor="@color/black"
                         android:textSize="18dp"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="até 6x no cartão"
-                        android:textColor="@color/black"
-                        android:textSize="18dp"
-                        android:layout_marginStart="8dp"/>
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="até 6x no cartão"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="18dp"-->
+<!--                        android:layout_marginStart="8dp"/>-->
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>

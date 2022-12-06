@@ -8,6 +8,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.res.ResourcesCompat;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -141,6 +142,17 @@ public class MarcarConsultaActivity extends AppCompatActivity {
 
             }
         });
+
+        binding.btnSobreConsulta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MarcarConsultaActivity.this, SobreTratamentoActivity.class);
+                intent.putExtra("idTratamento", idTratamento);
+                intent.putExtra("cpf", cpf);
+                intent.putExtra("senha", senha);
+                startActivity(intent);
+            }
+        });
     }
 
     public void configurarEndereco(String unidade){
@@ -217,6 +229,7 @@ public class MarcarConsultaActivity extends AppCompatActivity {
                 if(response.code() == 200)
                 {
                     tratamento = response.body();
+                    binding.nomeTratameno.setText(response.body().getNome());
                 }
             }
             @Override

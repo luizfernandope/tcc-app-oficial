@@ -9,7 +9,9 @@ public class Tratamento {
     private String tipo;
     private String tempo;
     private Double valor;
-    
+    private Integer sessoes;
+    private String pqFazer;
+
 
     public Integer getId() {
         return id;
@@ -59,5 +61,19 @@ public class Tratamento {
         this.valor = valor;
     }
 
+    public Integer getSessoes() {
+        return sessoes;
+    }
 
+    public void setSessoes(Integer sessoes) {
+        this.sessoes = sessoes;
+    }
+
+    public String getPqFazer() {
+        return pqFazer;
+    }
+
+    public void setPqFazer(String pqFazer) {
+        this.pqFazer = pqFazer;
+    }
 }

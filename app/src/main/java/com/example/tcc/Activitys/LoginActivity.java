@@ -186,4 +186,8 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void irParaEsqueceuSenha(View view){
+        Intent intent = new Intent(LoginActivity.this, EsqueceuSenhaActivity.class);
+        startActivity(intent);
+    }
 }

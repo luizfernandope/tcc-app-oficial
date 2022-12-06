@@ -83,6 +83,8 @@ public class TratamentoAdapter extends RecyclerView.Adapter<TratamentoViewHolder
                     else if(cliente == false){
                         Intent intent = new Intent(context, EditarTratamentoActivity.class);
                         intent.putExtra("idTratamento", card1.getId());
+                        intent.putExtra("cpf", cpf);
+                        intent.putExtra("senha", senha);
                         context.startActivity(intent);
                     }
                 }
@@ -101,6 +103,8 @@ public class TratamentoAdapter extends RecyclerView.Adapter<TratamentoViewHolder
                     else if(cliente == false){
                         Intent intent = new Intent(context, EditarTratamentoActivity.class);
                         intent.putExtra("idTratamento", card1.getId());
+                        intent.putExtra("cpf", cpf);
+                        intent.putExtra("senha", senha);
                         context.startActivity(intent);
                     }
                 }
@@ -131,6 +135,8 @@ public class TratamentoAdapter extends RecyclerView.Adapter<TratamentoViewHolder
                     else if(cliente == false){
                         Intent intent = new Intent(context, EditarTratamentoActivity.class);
                         intent.putExtra("idTratamento", card2.getId());
+                        intent.putExtra("cpf", cpf);
+                        intent.putExtra("senha", senha);
                         context.startActivity(intent);
                     }
                 }
@@ -149,6 +155,8 @@ public class TratamentoAdapter extends RecyclerView.Adapter<TratamentoViewHolder
                     else if(cliente == false){
                         Intent intent = new Intent(context, EditarTratamentoActivity.class);
                         intent.putExtra("idTratamento", card2.getId());
+                        intent.putExtra("cpf", cpf);
+                        intent.putExtra("senha", senha);
                         context.startActivity(intent);
                     }
                 }

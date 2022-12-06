@@ -120,6 +120,8 @@ public class ServicosFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), EditarTratamentoActivity.class);
+                intent.putExtra("cpf", cpf);
+                intent.putExtra("senha", senha);
                 getContext().startActivity(intent);
             }
         });

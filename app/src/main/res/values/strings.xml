@@ -13,7 +13,8 @@
     <string name="whatssapVilaMaria">(11) 91323-1138</string>
     <string name="whatssapCarapicuiba">(11) 99446-9429</string>
     <string name="email"><b>E-mail:</b> dentistavaleria@gmail.com</string>
-
+    <string name="telefone"><b>Telefone: </b></string>
+    <string name="whatsapp"><b>Whatsapp: </b></string>
 
 
     <string name="preference_file_key">com.example.tcc.PREFERENCE_FILE_KEY</string>
@@ -24,8 +25,6 @@
     <string-array name="array_clinicas">
         <item>carapícuiba, pq santa teresa</item>
         <item>são paulo, vila maria alta</item>
-        <item>c3</item>
-        <item>c4</item>
     </string-array>
 
     <string-array name="array_tiposTratamentos">
