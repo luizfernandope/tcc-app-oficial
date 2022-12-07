@@ -3,6 +3,8 @@
 > Nosso aplicativo mobile foi feito para auxiliar clientes a marcarem suas consultas e auxiliar as clínicas odontológicas a terem um sistema automatizado, 
 de modo a facilitar e agilizar o processo de marcar, gerir e visualizar consultas para ambos clietes e funcionários.
 
+* [acesse o site da empresa para mais informações](https://tcc-mewtwo.onrender.com)
+
 # Tecnologias utilizadas
 
 Tecnologia | descrição
