@@ -23,17 +23,21 @@ Android 5+|
 Qualquer aparelho android|
 
 # Videos do app funcionando
+
 * <a href="https://drive.google.com/file/d/1_b-ImC5_Z0FzI_YhOhkIPpCRNUHH4ryU/view?usp=share_link">Visão do usuario admin logado</a>
 * <a href="https://drive.google.com/file/d/1_Yc875rPPabt4-i3PY_6Y-9vra_EVDZW/view?usp=share_link">Visão do cliente logado</a>
 * <a href="https://drive.google.com/file/d/1_drqLx4NXI0F27C1rRZD0gXlliF8n8Rk/view?usp=share_link">Etapas do cadastro</a>
 * <a href="https://drive.google.com/file/d/1_o4Bc5G6slwCBODmEoZElesvLp5Lj-kn/view?usp=share_link">Demonstração do login automatico</a>
 * <a href="https://drive.google.com/file/d/1_lx3uvcErI6as895YnPGWdWorPyk3qbq/view?usp=share_link">Etapas para recupar senha</a>
 
+# Link para download do app
+1. Baixe o app e veja você mesmo o projeto
+2. <a href="https://drive.google.com/file/d/1rtiflkn0tXZ1iLzkAG7Ret7RzuJM1aiG/view?usp=share_link"> Baixar agora</a>
 
 # Autores
 
 * <a href="https://github.com/luizfernandope">Luiz Fernando Pegorari (FullStack Developer)</a>
-* <a href="https://github.com/luizfernandope">Gabriel Xavier (BackEnd Developer)</a>
+* <a href="https://github.com/GabrielPw">Gabriel Xavier Araújo (BackEnd Developer)</a>
 
 # Dúvidas
 <b>Para quaisquer dúvidas, entre em contato comigo através do linkedIn.</b>
