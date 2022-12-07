@@ -12,8 +12,10 @@ import java.util.Optional;
 
 import kotlin.ParameterName;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
 import retrofit2.http.Header;
@@ -27,6 +29,8 @@ public interface APICall {
 
 // https://clinica-tcc-api.herokuapp.com/            link api
 
+    @POST("servico/{cpf}/{senha}")
+    Call<ResponseBody> cadastrarTratamento(@Path("cpf") String cpf, @Path("senha") String senha, @Body Tratamento servico);
 
     @GET("servico/listar")
     Call<List<Tratamento>> listarTratamentos();
@@ -91,6 +95,9 @@ public interface APICall {
     @PUT("servico/atualizarServico/{id}/{cpf}/{senha}")
     Call<Tratamento> atualizarTratamento(@Path("id") Integer id, @Path("cpf") String cpf, @Path("senha") String senha,@Body Tratamento servico);
 
-    @POST("servico/{cpf}/{senha}")
-    Call<Optional<Tratamento>> cadastrarTratamento(@Path("cpf") String cpf, @Path("senha") String senha, @Body Tratamento servico);
+    @PUT("consultas/updateById/{id}/{cpf}/{senha}")
+    Call<Consulta> atualizarConsulta(@Path("id") Integer id, @Path("cpf") String cpf, @Path("senha") String senha,@Body Consulta consulta);
+
+    @DELETE("consultas/deleteById/{id}/{cpf}/{senha}")
+    Call<ResponseBody> deletarConsulta(@Path("id") Integer id, @Path("cpf") String cpf, @Path("senha") String senha);
 }

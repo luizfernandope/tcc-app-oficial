@@ -132,12 +132,12 @@ public class AgendaFragment extends Fragment {
                     if (consultasFiltrados.isEmpty()) {
                         Toast.makeText(binding.getRoot().getContext(), "Busca sem resultados", Toast.LENGTH_SHORT).show();
                         //exibe nenhum item
-                        adapter = new ConsultaAdapter(getContext(), consultasFiltrados, cpf, senha);
+                        adapter = new ConsultaAdapter(getContext(), consultasFiltrados, cpf, senha, cliente);
                         recyclerView.setAdapter(adapter);
                     }
                     else{
                         //exibe os itens
-                        adapter = new ConsultaAdapter(getContext(), consultasFiltrados, cpf, senha);
+                        adapter = new ConsultaAdapter(getContext(), consultasFiltrados, cpf, senha, cliente);
                         recyclerView.setAdapter(adapter);
                     }
 
@@ -176,7 +176,7 @@ public class AgendaFragment extends Fragment {
     void inicializarListagem(){
         recyclerView = binding.recyclerViewAgenda;
         recyclerView.setHasFixedSize(true);//da mais desempenho na listagem
-        adapter = new ConsultaAdapter(binding.getRoot().getContext(), consultas, cpf, senha);
+        adapter = new ConsultaAdapter(binding.getRoot().getContext(), consultas, cpf, senha, cliente);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(binding.getRoot().getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);

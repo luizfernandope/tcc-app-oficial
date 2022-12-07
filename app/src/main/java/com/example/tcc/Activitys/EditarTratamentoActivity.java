@@ -14,8 +14,7 @@ import com.example.tcc.databinding.ActivityEditarTratamentoBinding;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.util.Optional;
-
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,7 +27,7 @@ public class EditarTratamentoActivity extends AppCompatActivity {
     private Integer idTratamento;
     private APICall apiCall;
     private String cpf, senha;
-    Tratamento tratamento = null;
+    Tratamento tratamento = new Tratamento();
     boolean rodou;
 
     @Override
@@ -143,17 +142,16 @@ public class EditarTratamentoActivity extends AppCompatActivity {
 
     public void cadastrarTratamento(){
         configurarRetrofit();
-        tratamento = new Tratamento();
         tratamento.setDescricao(binding.etDescricao.getText().toString());
         tratamento.setPqFazer(binding.etPqFazer.getText().toString());
         tratamento.setTempo(binding.etHoras.getText().toString());
         tratamento.setValor(Double.parseDouble(binding.etPreco.getText().toString().replace(",", ".")));
         tratamento.setSessoes(Integer.parseInt(binding.etQtdSessoes.getText().toString()));
         tratamento.setTipo(binding.spinnerClinicas.getSelectedItem().toString());
-        Call<Optional<Tratamento>> t = apiCall.cadastrarTratamento(cpf, senha, tratamento);
-        t.enqueue(new Callback<Optional<Tratamento>>() {
+        Call<ResponseBody> t = apiCall.cadastrarTratamento(cpf, senha, tratamento);
+        t.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<Optional<Tratamento>> call, Response<Optional<Tratamento>> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.code() == 201)
                 {
                     Toast.makeText(EditarTratamentoActivity.this, "novo tratamento criado", Toast.LENGTH_SHORT).show();
@@ -165,7 +163,7 @@ public class EditarTratamentoActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Optional<Tratamento>> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
 
             }
         });

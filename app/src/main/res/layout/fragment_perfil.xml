@@ -148,7 +148,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="sexo"
-                        android:text="asd"
                         android:textColor="@color/white"
                         android:enabled="false"/>
 
@@ -172,8 +171,7 @@
                         android:layout_height="wrap_content"
                         android:hint="email"
                         android:enabled="false"
-                        android:textColor="@color/white"
-                        android:text="email@gmail.com" />
+                        android:textColor="@color/white" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 

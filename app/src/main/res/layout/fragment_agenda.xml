@@ -86,7 +86,7 @@
                             android:layout_marginEnd="10dp"
                             android:background="@drawable/bg_curvo12"
                             android:paddingHorizontal="6dp"
-                            android:text="pendentes"
+                            android:text="pendente"
                             android:textColor="@color/black"
                             android:textSize="16dp" />
                         <androidx.appcompat.widget.AppCompatButton
@@ -95,7 +95,7 @@
                             android:layout_marginEnd="10dp"
                             android:background="@drawable/bg_curvo12"
                             android:paddingHorizontal="6dp"
-                            android:text="realizadas"
+                            android:text="realizada"
                             android:textColor="@color/black"
                             android:textSize="16dp" />
                         <androidx.appcompat.widget.AppCompatButton
@@ -104,7 +104,7 @@
                             android:layout_marginEnd="10dp"
                             android:background="@drawable/bg_curvo12"
                             android:paddingHorizontal="6dp"
-                            android:text="canceladas"
+                            android:text="cancelada"
                             android:textColor="@color/black"
                             android:textSize="16dp" />
                         <androidx.appcompat.widget.AppCompatButton

@@ -2,22 +2,26 @@ package com.example.tcc.Activitys;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.tcc.Interfaces.APICall;
 import com.example.tcc.Models.Consulta;
-import com.example.tcc.Models.Tratamento;
 import com.example.tcc.R;
 import com.example.tcc.databinding.ActivitySobreConsultaBinding;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.List;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,6 +35,10 @@ public class SobreConsultaActivity extends AppCompatActivity {
     String cpf, senha;
     APICall apiCall;
     Integer idTratamento;
+    LinearLayout linearLayout;
+    int botaoAtual;
+    boolean clicouSituacao = false, ehCliente = true;
+    Consulta consulta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +49,15 @@ public class SobreConsultaActivity extends AppCompatActivity {
         idConsulta = getIntent().getIntExtra("idConsulta", 0);
         cpf = getIntent().getStringExtra("cpf");
         senha = getIntent().getStringExtra("senha");
+        ehCliente = getIntent().getBooleanExtra("cliente", true);
 
+        if(!ehCliente){
+            binding.paraFuncionario.setVisibility(View.VISIBLE);
+            binding.btnSobreConsulta.setBackgroundResource(R.drawable.borda_black);
+            binding.btnSobreConsulta.setTextColor(getColor(R.color.black));
+        }
+
+        linearLayout = binding.layoutSituacoes;
         formatarTextos();
 
         binding.btnSobreConsulta.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +69,96 @@ public class SobreConsultaActivity extends AppCompatActivity {
                 intent.putExtra("cpf", cpf);
                 intent.putExtra("senha", senha);
                 startActivity(intent);
+            }
+        });
+
+        List<View> listaBtnSituacao = linearLayout.getTouchables();
+
+        for(int i = 0; i<3; i++){
+            listaBtnSituacao.get(i).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    for(int i = 0; i<3; i++){
+                        if(((Button) view) == ((Button) listaBtnSituacao.get(i))){
+                            botaoAtual = i;
+                        }
+                    }
+
+                    if(botaoAtual == 0){
+                        AppCompatButton button = (AppCompatButton) listaBtnSituacao.get(0);
+                        AppCompatButton button2 = (AppCompatButton) listaBtnSituacao.get(1);
+                        AppCompatButton button3 = (AppCompatButton) listaBtnSituacao.get(2);
+                        button.setBackgroundResource(R.color.verde);
+                        button2.setBackgroundResource(R.drawable.bg_curvo12);
+                        button3.setBackgroundResource(R.drawable.bg_curvo12);
+                        button.setTextColor(getColor(R.color.white));
+                        button2.setTextColor(getColor(R.color.black));
+                        button3.setTextColor(getColor(R.color.black));
+                    }
+                    if(botaoAtual == 1){
+                        AppCompatButton button = (AppCompatButton) listaBtnSituacao.get(1);
+                        AppCompatButton button2 = (AppCompatButton) listaBtnSituacao.get(0);
+                        AppCompatButton button3 = (AppCompatButton) listaBtnSituacao.get(2);
+                        button.setBackgroundResource(R.color.vermelho);
+                        button2.setBackgroundResource(R.drawable.bg_curvo12);
+                        button3.setBackgroundResource(R.drawable.bg_curvo12);
+                        button.setTextColor(getColor(R.color.white));
+                        button2.setTextColor(getColor(R.color.black));
+                        button3.setTextColor(getColor(R.color.black));
+                    }
+                    if(botaoAtual == 2){
+                        AppCompatButton button = (AppCompatButton) listaBtnSituacao.get(2);
+                        AppCompatButton button2 = (AppCompatButton) listaBtnSituacao.get(0);
+                        AppCompatButton button3 = (AppCompatButton) listaBtnSituacao.get(1);
+                        button.setBackgroundResource(R.color.ciza);
+                        button2.setBackgroundResource(R.drawable.bg_curvo12);
+                        button3.setBackgroundResource(R.drawable.bg_curvo12);
+                        button.setTextColor(getColor(R.color.white));
+                        button2.setTextColor(getColor(R.color.black));
+                        button3.setTextColor(getColor(R.color.black));
+                    }
+                    clicouSituacao = true;
+                    binding.avisoSalvar.setVisibility(View.VISIBLE);
+                }
+            });
+        }
+
+        binding.btnSalvarAlteracoes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(clicouSituacao == true){
+                    AppCompatButton button = (AppCompatButton) listaBtnSituacao.get(botaoAtual);
+                    consulta.setSituacao(button.getText().toString());
+                    Call<Consulta> call = apiCall.atualizarConsulta(idConsulta, cpf, senha, consulta);
+                    call.enqueue(new Callback<Consulta>() {
+                        @Override
+                        public void onResponse(Call<Consulta> call, Response<Consulta> response) {
+                            if(response.isSuccessful()){
+                                Toast.makeText(SobreConsultaActivity.this, "atualizacao efetuada com sucesso", Toast.LENGTH_SHORT).show();
+                                button.setBackgroundResource(R.drawable.bg_curvo12);
+                                button.setTextColor(getColor(R.color.black));
+                                clicouSituacao = false;
+                                binding.avisoSalvar.setVisibility(View.GONE);
+                                formatarTextos();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Consulta> call, Throwable t) {
+
+                        }
+                    });
+                }
+                else{
+                    Toast.makeText(SobreConsultaActivity.this, "clique em alguma opção de situação", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        binding.btnDesmarcar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                desmarcar();
             }
         });
     }
@@ -82,16 +188,6 @@ public class SobreConsultaActivity extends AppCompatActivity {
                     String endereco = response.body().getClinica().getRua() + ", " + response.body().getClinica().getNumero() + " - " + response.body().getClinica().getBairro();
                     binding.tvEndereco.setText(endereco);
                     binding.tvData.setText(response.body().getDatahora());
-                    if(response.body().getSituacao()=="aguardando confirmação");
-                        binding.tvSituacao.setTextColor(Color.parseColor("#eead2d"));
-                    if(response.body().getSituacao()=="pendentes")
-                        binding.tvSituacao.setTextColor(Color.DKGRAY);
-                    if(response.body().getSituacao()=="realizadas")
-                        binding.tvSituacao.setTextColor(Color.GREEN);
-                    if(response.body().getSituacao()=="canceladas")
-                        binding.tvSituacao.setTextColor(Color.RED);
-                    if(response.body().getSituacao()=="finalizado")
-                        binding.tvSituacao.setTextColor(Color.GREEN);
 
                     binding.tvSituacao.setText(response.body().getSituacao());
                     binding.nomeTratameno.setText(response.body().getServico().getNome());
@@ -101,8 +197,16 @@ public class SobreConsultaActivity extends AppCompatActivity {
                     binding.telefone.setText(binding.telefone.getText() + response.body().getClinica().getTelefone());
                     binding.whatssap.setText(binding.whatssap.getText() + response.body().getClinica().getWhatsapp());
 
+                    binding.nomeCliente.setText(response.body().getCliente().getNome());
+                    binding.emailCliente.setText("Email: "+response.body().getCliente().getEmail());
+                    binding.cpfCliente.setText("CPF: "+response.body().getCliente().getUsuario().getCpf());
+                    binding.sexoEdtnasciCliente.setText(response.body().getCliente().getSexo()+"\n"+response.body().getCliente().getDtNascimento());
+
                     idTratamento = response.body().getServico().getId();
+                    consulta = response.body();
+
                 }
+
             }
 
             @Override
@@ -114,5 +218,24 @@ public class SobreConsultaActivity extends AppCompatActivity {
 
     public void voltarSobreConsulta(View view){
         onBackPressed();
+    }
+
+    public void desmarcar(){
+        configurarRetrofit();
+        Call<ResponseBody> call = apiCall.deletarConsulta(idConsulta, cpf, senha);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful())
+                    Toast.makeText(SobreConsultaActivity.this, "Consulta desmarcada e apagada.", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(SobreConsultaActivity.this, "erro", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 }
