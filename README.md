@@ -12,7 +12,8 @@ Android Studio | ide de desenvolvimento do app
 inteliJ | ide de desenvolvimento da api
 Figma | Para criação de designs e protótipos
 Spring boot | Framework utilizado para criar a api
-SQL server | Banco de dados
+SQL server | Linguagem do banco de dados
+Somee | Para hospedar o banco online
 Render | Plataforma de hospedagem, para deixar API online
 Docker | Para criar imagem de inicialização da API
 
