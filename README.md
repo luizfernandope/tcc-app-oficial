@@ -25,7 +25,7 @@ Android 5+|
 --------|
 Qualquer aparelho android|
 
-> # Algumas Screenshots
+# Algumas Screenshots
 > Home | Servicos 
 > ------------------|-------------
 > <img src="https://user-images.githubusercontent.com/74561722/211220630-acf80ba7-b84a-4b1f-8f39-878810f3fda2.jpg" height="700px"/> | <img src="https://user-images.githubusercontent.com/74561722/211220881-453d37dc-3065-4cf3-aed5-4dd698c11d0e.jpg" height="700px"/> 
