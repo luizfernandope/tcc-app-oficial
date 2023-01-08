@@ -25,6 +25,15 @@ Android 5+|
 --------|
 Qualquer aparelho android|
 
+> # Algumas Screenshots
+> Home | Servicos 
+> ------------------|-------------
+> <img src="https://user-images.githubusercontent.com/74561722/211220630-acf80ba7-b84a-4b1f-8f39-878810f3fda2.jpg" height="700px"/> | <img src="https://user-images.githubusercontent.com/74561722/211220881-453d37dc-3065-4cf3-aed5-4dd698c11d0e.jpg" height="700px"/> 
+> Sobre serviço | Agendamento
+> <img src="https://user-images.githubusercontent.com/74561722/211220884-90c94663-a8aa-424e-9e8e-b0d68d332da1.jpg" height="700px"/> | <img src="https://user-images.githubusercontent.com/74561722/211220889-d86b5409-8c3d-4e21-9c92-73ff63d14808.jpg" height="700px"/>
+
+
+
 # Videos do app funcionando
 
 * <a href="https://drive.google.com/file/d/1_b-ImC5_Z0FzI_YhOhkIPpCRNUHH4ryU/view?usp=share_link">Visão do usuario admin logado</a>
